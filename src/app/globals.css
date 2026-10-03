@@ -1,0 +1,84 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy-50: #eef3fb;
+  --color-navy-100: #d7e2f5;
+  --color-navy-200: #adc3e6;
+  --color-navy-300: #7d9dd4;
+  --color-navy-400: #4a72b6;
+  --color-navy-500: #2b5297;
+  --color-navy-600: #1d3f7c;
+  --color-navy-700: #153163;
+  --color-navy-800: #0e244b;
+  --color-navy-900: #081734;
+  --color-gold-50: #fffaeb;
+  --color-gold-100: #fdf0c8;
+  --color-gold-200: #fbdf8c;
+  --color-gold-300: #f8c94f;
+  --color-gold-400: #f2b31f;
+  --color-gold-500: #d9970f;
+  --color-gold-600: #b3760b;
+  --color-gold-700: #8a580c;
+
+  --font-sans: "Segoe UI", "Inter", system-ui, -apple-system, "Helvetica Neue",
+    Arial, sans-serif;
+  --font-serif: "Georgia", "Times New Roman", serif;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
+
+body {
+  font-family: var(--font-sans);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 0.6s ease-out both;
+}
+
+.school-crest-shadow {
+  box-shadow: 0 10px 30px -12px rgba(8, 23, 52, 0.55);
+}
+
+.marquee-track {
+  display: inline-flex;
+  gap: 3rem;
+  white-space: nowrap;
+  animation: marquee 28s linear infinite;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+  }
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+::selection {
+  background: var(--color-gold-300);
+  color: var(--color-navy-900);
+}
