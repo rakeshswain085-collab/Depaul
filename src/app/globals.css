@@ -60,6 +60,59 @@ body {
   animation: marquee 28s linear infinite;
 }
 
+/* Admin login: isolate colors from the public website theme */
+.admin-login-page {
+  min-height: 100vh;
+  color: #f8fafc !important;
+  background: #071329 !important;
+  color-scheme: dark;
+}
+
+.admin-login-page .admin-brand-panel {
+  color: #f8fafc !important;
+  background: linear-gradient(135deg, #10284b, #091326) !important;
+}
+
+.admin-login-page .admin-form-panel {
+  color: #f8fafc !important;
+  background: #0b172b !important;
+}
+
+.admin-login-page h1,
+.admin-login-page h2,
+.admin-login-page h3,
+.admin-login-page label {
+  color: #f8fafc !important;
+}
+
+.admin-login-page p {
+  color: #b9c7dc;
+}
+
+.admin-login-page input {
+  color: #ffffff !important;
+  background-color: #101f35 !important;
+  border: 1px solid #40516b !important;
+}
+
+.admin-login-page input::placeholder {
+  color: #94a3b8 !important;
+}
+
+.admin-login-page input:focus {
+  border-color: #f2b31f !important;
+  outline: 2px solid rgb(242 179 31 / 20%);
+}
+
+.admin-login-page button[type="submit"] {
+  color: #071329 !important;
+  background: #f2b31f !important;
+}
+
+.admin-login-page button[type="submit"]:hover {
+  background: #f8c94f !important;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);

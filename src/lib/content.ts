@@ -158,111 +158,97 @@ export const GALLERY_PHOTOS: GalleryPhoto[] = [
     sortOrder: 2,
   },
 
-  //ACTIVITIES
-
+  
+  // SCHOOL ACTIVITIES
   {
     category: "School Activities",
-    title: "Cultural Programme",
+    title: "",
     imageUrl: "/images/gallery/activities/school-activity1.jpeg",
-    caption: "Students performing at the annual cultural programme",
     sortOrder: 1,
   },
   {
     category: "School Activities",
-    title: "Library Reading Session",
-       imageUrl: "/images/gallery/activities/school-activity2.jpeg",
-    caption: "Reading session in the school library",
+    title: "",
+    imageUrl: "/images/gallery/activities/school-activity2.jpeg",
     sortOrder: 2,
   },
-    {
+  {
     category: "School Activities",
-    title: "Library Reading Session",
-      imageUrl: "/images/gallery/activities/school-activity3.jpeg",
-    caption: "Reading session in the school library",
+    title: "",
+    imageUrl: "/images/gallery/activities/school-activity3.jpeg",
     sortOrder: 3,
   },
-    {
+  {
     category: "School Activities",
-    title: "Library Reading Session",
-       imageUrl: "/images/gallery/activities/school-activity4.jpeg",
-    caption: "Reading session in the school library",
+    title: "",
+    imageUrl: "/images/gallery/activities/school-activity4.jpeg",
     sortOrder: 4,
   },
-    {
+  {
     category: "School Activities",
-    title: "Library Reading Session",
-       imageUrl: "/images/gallery/activities/school-activity5.jpeg",
-    caption: "Reading session in the school library",
+    title: "",
+    imageUrl: "/images/gallery/activities/school-activity5.jpeg",
     sortOrder: 5,
   },
-    {
+  {
     category: "School Activities",
-    title: "Library Reading Session",
-        imageUrl: "/images/gallery/activities/school-activity6.jpeg",
-    caption: "Reading session in the school library",
+    title: "",
+    imageUrl: "/images/gallery/activities/school-activity6.jpeg",
     sortOrder: 6,
   },
-  //EVENTS
+
+  // SCHOOL EVENTS
   {
     category: "School Events",
-    title: "Science Exhibition",
+    title: "",
     imageUrl: "/images/gallery/events/school-event1.jpeg",
-    caption: "Students demonstrating science models",
     sortOrder: 1,
   },
   {
     category: "School Events",
-    title: "Annual Sports Meet",
-      imageUrl: "/images/gallery/events/school-event2.jpeg",
-    caption: "Sports day march past on the school ground",
+    title: "",
+    imageUrl: "/images/gallery/events/school-event2.jpeg",
     sortOrder: 2,
   },
-    {
+  {
     category: "School Events",
-    title: "Annual Sports Meet",
-      imageUrl: "/images/gallery/events/school-event3.jpeg",
-    caption: "Sports day march past on the school ground",
+    title: "",
+    imageUrl: "/images/gallery/events/school-event3.jpeg",
     sortOrder: 3,
   },
 
-  //MEMORIES
+  // SCHOOL MEMORIES
   {
     category: "School Memories",
-    title: "Assembly",
+    title: "",
     imageUrl: "/images/gallery/memories/school-memories1.jpeg",
-    caption: "Morning assembly on the school ground",
     sortOrder: 1,
   },
   {
     category: "School Memories",
-    title: "Classroom Learning",
+    title: "",
     imageUrl: "/images/gallery/memories/school-memories2.jpeg",
-    caption: "Interactive classroom session",
     sortOrder: 2,
   },
-    {
+  {
     category: "School Memories",
-    title: "Classroom Learning",
+    title: "",
     imageUrl: "/images/gallery/memories/school-memories3.jpeg",
-    caption: "Interactive classroom session",
     sortOrder: 3,
   },
-    {
+  {
     category: "School Memories",
-    title: "Classroom Learning",
+    title: "",
     imageUrl: "/images/gallery/memories/school-memories4.jpeg",
-    caption: "Interactive classroom session",
     sortOrder: 4,
   },
-    {
+  {
     category: "School Memories",
-    title: "Classroom Learning",
+    title: "",
     imageUrl: "/images/gallery/memories/school-memories5.jpeg",
-    caption: "Interactive classroom session",
     sortOrder: 5,
   },
 ];
-
 // ----------------------------------------------------------------------------
 // LEADERSHIP MESSAGES  (portraits live in public/images/)
 // ----------------------------------------------------------------------------
@@ -290,7 +276,7 @@ export const MESSAGES: LeadershipMessage[] = [
 // ----------------------------------------------------------------------------
 export const ADMISSION = {
   admission_intro:
-    "Admissions at De-Paul Senior Secondary School, Aska are open to students from Nursery to Senior Secondary levels. Parents may collect the registration form from the school office on working days between 9:00 AM and 2:00 PM.",
+    "Admissions at De-Paul Senior Secondary School, Aska are open to students from Pre-Nursery to Senior Secondary levels. Parents may collect the registration form from the school office on working days between 9:00 AM and 2:00 PM.",
   admission_application:
     "Registration forms are issued from the school office. Duly filled forms must be submitted with a copy of the birth certificate, Aadhaar copy, previous progress report and four passport-size photographs.",
   admission_schedule:

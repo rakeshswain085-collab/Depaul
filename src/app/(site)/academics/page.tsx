@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 const STAGES = [
   {
     stage: "Pre-Primary & Primary",
-    classes: "Nursery – Class V",
+    classes: "Pre-Nursery – Class V",
     detail:
       "Play-way and activity based learning, phonics and language development, number sense, art, rhymes and storytelling.",
   },
@@ -33,7 +33,7 @@ const STAGES = [
     stage: "Senior Secondary",
     classes: "Class XI – Class XII",
     detail:
-      "Science stream (Physics, Chemistry, Mathematics / Biology, English) and Commerce stream (Accountancy, Business Studies, Economics, English).",
+      "Science stream (Physics, Chemistry, Mathematics, English / Biology / Computer Science) .",
   },
 ];
 

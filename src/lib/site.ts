@@ -134,7 +134,7 @@ export const MANDATORY_DISCLOSURE = [
   { label: "School Code", value: "15344" },
   { label: "Board", value: "Central Board of Secondary Education (CBSE)" },
   { label: "School Category", value: "Senior Secondary (Co-educational)" },
-  { label: "Classes Offered", value: "Nursery to Class XII" },
+  { label: "Classes Offered", value: "Pre-Nursery to Class XII" },
   { label: "Year of Establishment", value: "2000" },
   { label: "Address", value: SCHOOL.address },
   { label: "District / State", value: "Ganjam, Odisha – 761111" },

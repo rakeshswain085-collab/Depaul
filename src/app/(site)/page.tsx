@@ -1,21 +1,21 @@
 import Image from "next/image";
 import Link from "next/link";
+import { PublicEvents } from "@/components/public-events";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { GalleryViewer } from "@/components/gallery-viewer";
+import { LiveHomeNotices } from "@/components/live-home-notices";
+import MeetOurTeachers from "@/components/meet-our-teachers";
 import {
   EventCard,
   FeatureRow,
   InfoCard,
-  NoticeCard,
   Section,
   SectionHeading,
 } from "@/components/ui";
 import {
-  formatLongDate,
   getEvents,
   getGalleryPhotos,
   getMessage,
-  getNotices,
   getSettings,
   groupPhotos,
 } from "@/lib/queries";
@@ -28,14 +28,15 @@ import {
   SCHOOL,
 } from "@/lib/site";
 
-export default function HomePage() {
-  const notices = getNotices(3);
-  const events = getEvents(4);
-  const groups = groupPhotos(getGalleryPhotos());
-  const chairman = getMessage("chairman");
-  const principal = getMessage("principal");
-  const settings = getSettings();
-  const latestNotice = notices[0];
+export default async function HomePage() {
+  const [events, galleryPhotos, chairman, principal, settings] = await Promise.all([
+    getEvents(4),
+    getGalleryPhotos(),
+    getMessage("chairman"),
+    getMessage("principal"),
+    getSettings(),
+  ]);
+  const groups = groupPhotos(galleryPhotos);
 
   return (
     <>
@@ -91,12 +92,18 @@ export default function HomePage() {
               >
                 Admission
               </Link>
+              <Link
+                href="/admin/login"
+                className="inline-flex items-center gap-2 rounded-lg bg-gold-400 px-6 py-3 text-sm font-bold uppercase tracking-wider text-navy-900 shadow-sm transition hover:bg-gold-300"
+              >
+                Admin Login
+              </Link>
             </div>
             <dl className="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-white/15 pt-6 text-white">
               {[
                 { value: "26+", label: "Years of Excellence" },
-                { value: "1200+", label: "Students" },
-                { value: "Nur–XII", label: "Classes Offered" },
+                { value: "600+", label: "Students" },
+                { value: "Pre-Nur–XII", label: "Classes Offered" },
               ].map((stat) => (
                 <div key={stat.label}>
                   <dt className="text-2xl font-extrabold text-gold-300">
@@ -202,43 +209,8 @@ className="h-auto w-full max-w-[115px] object-contain"
    </div>
       </section>
 
-      {/* ---------------- MARQUEE ---------------- */}
-      {latestNotice ? (
-        <div className="overflow-hidden border-y border-gold-200 bg-gold-50 py-2.5">
-          <div className="marquee-track text-sm font-semibold text-navy-800">
-            {[0, 1].map((copy) => (
-              <span key={copy} className="inline-flex gap-12">
-                <span>📢 {latestNotice.title}</span>
-                <span>📅 {formatLongDate(latestNotice.noticeDate)}</span>
-                <span>🎓 {SCHOOL.tagline}</span>
-                <span>🏫 CBSE Affiliation No. {SCHOOL.affiliation}</span>
-              </span>
-            ))}
-          </div>
-        </div>
-      ) : null}
-
-      {/* ---------------- LATEST UPDATES ---------------- */}
-      <Section id="latest-notice" className="bg-slate-50">
-        <SectionHeading
-          eyebrow="Latest Updates"
-          title="School Notices"
-          description="Important announcements are displayed with the latest notice first."
-        />
-        <div className="mt-10 grid gap-5 md:grid-cols-3">
-          {notices.map((notice) => (
-            <NoticeCard key={notice.id} notice={notice} />
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link
-            href="/notices"
-            className="inline-block rounded-lg border border-navy-800 px-6 py-3 text-sm font-bold uppercase tracking-wider text-navy-800 transition hover:bg-navy-800 hover:text-white"
-          >
-            View All Notices →
-          </Link>
-        </div>
-      </Section>
+      {/* ---------------- LIVE NOTICES ---------------- */}
+      <LiveHomeNotices />
 
       {/* ---------------- ABOUT ---------------- */}
       <Section id="about">
@@ -277,7 +249,7 @@ className="h-auto w-full max-w-[115px] object-contain"
                 value="Central Board of Secondary Education"
               />
               <FeatureRow icon="🏷️" label="Affiliation No." value={SCHOOL.affiliation} />
-              <FeatureRow icon="🏛️" label="Classes" value="Nursery to Class XII" />
+              <FeatureRow icon="🏛️" label="Classes" value="Pre-Nursery to Class XII" />
             </div>
             <Link
               href="/about"
@@ -368,7 +340,10 @@ className="h-auto w-full max-w-[115px] object-contain"
   </div>
 </Section>
 
-{/* ---------------- SCHOOL SOCIAL MEDIA ---------------- */}
+{/* ---------------- MEET OUR TEACHERS ---------------- */}
+      <MeetOurTeachers />
+
+      {/* ---------------- SCHOOL SOCIAL MEDIA ---------------- */}
 <Section className="relative overflow-hidden bg-gradient-to-b from-gold-50 via-white to-white">
 
   {/* Decorative Background */}
@@ -557,29 +532,36 @@ className="h-auto w-full max-w-[115px] object-contain"
   </div>
 </Section>
 
-      {/* ---------------- EVENTS ---------------- */}
-      <Section id="events">
-        <SectionHeading
-          eyebrow="Happenings"
-          title="School Events"
-          align="left"
-          description="Upcoming and recently celebrated events at school."
-        />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {events.map((event) => (
-            <EventCard key={event.id} event={event} />
-          ))}
-        </div>
-        <div className="mt-8 text-center">
-          <Link
-            href="/events"
-            className="inline-block rounded-lg border border-navy-800 px-6 py-3 text-sm font-bold uppercase tracking-wider text-navy-800 transition hover:bg-navy-800 hover:text-white"
-          >
-            All Events →
-          </Link>
-        </div>
-      </Section>
+```tsx
+{/* ---------------- EVENTS ---------------- */}
+<Section id="events" className="bg-slate-50">
+  <SectionHeading
+    eyebrow="Happenings"
+    title="School Events"
+    align="left"
+    description="Discover upcoming activities, celebrations, and memorable moments from our school."
+  />
 
+  <div className="mt-10">
+    <PublicEvents limit={5} />
+  </div>
+
+  <div className="mt-10 flex justify-center">
+    <Link
+      href="/events"
+      className="group inline-flex items-center gap-3 rounded-xl bg-navy-800 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-navy-900 hover:shadow-lg"
+    >
+      All Events
+      <span
+        aria-hidden="true"
+        className="text-lg transition-transform duration-300 group-hover:translate-x-1"
+      >
+        →
+      </span>
+    </Link>
+  </div>
+</Section>
+```
       {/* ---------------- GALLERY ---------------- */}
       <Section id="gallery" className="bg-slate-50">
         <SectionHeading
@@ -726,7 +708,7 @@ className="h-auto w-full max-w-[115px] object-contain"
                 { label: "School", value: `${SCHOOL.name}` },
                 { label: "Location", value: "Aska, Ganjam, Odisha" },
                 { label: "Board", value: "CBSE, New Delhi" },
-                { label: "Classes", value: "Nursery to Class XII" },
+                { label: "Classes", value: "Pre-Nursery to Class XII" },
               ].map((row) => (
                 <div
                   key={row.label}

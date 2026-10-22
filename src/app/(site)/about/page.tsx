@@ -14,7 +14,7 @@ import { ACADEMICS, FACILITIES, SCHOOL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "About De-Paul Senior Secondary School, Aska – CBSE affiliated school in Ganjam, Odisha offering classes from Nursery to Class XII.",
+    "About De-Paul Senior Secondary School, Aska – CBSE affiliated school in Ganjam, Odisha offering classes from Pre-Nursery to Class XII.",
 };
 
 export default function AboutPage() {
@@ -44,7 +44,7 @@ export default function AboutPage() {
               education. Classrooms are kept deliberately welcoming so that every
               learner feels safe to ask questions, make mistakes and improve. Over
               the years the school has grown into a full senior secondary
-              institution offering Science and Commerce streams at the higher
+              institution offering Science 
               secondary level.
             </p>
             <p className="mt-4 text-sm leading-relaxed text-slate-600">
@@ -56,7 +56,7 @@ export default function AboutPage() {
               <FeatureRow icon="📍" label="Location" value="Aska, Ganjam, Odisha" />
               <FeatureRow icon="🎓" label="Board" value={SCHOOL.board} />
               <FeatureRow icon="🏷️" label="Affiliation No." value={SCHOOL.affiliation} />
-              <FeatureRow icon="🏛️" label="Classes" value="Nursery to Class XII" />
+              <FeatureRow icon="🏛️" label="Classes" value="Pre-Nursery to Class XII" />
             </div>
           </div>
           <div className="grid gap-4">

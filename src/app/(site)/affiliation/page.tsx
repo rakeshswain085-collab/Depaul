@@ -45,8 +45,8 @@ export default function AffiliationPage() {
                   { label: "Location", value: "Aska, Ganjam, Odisha" },
                   { label: "Board", value: "CBSE, New Delhi" },
                   { label: "Affiliation Number", value: SCHOOL.affiliation },
-                  { label: "Classes", value: "Nursery to Class XII" },
-                  { label: "Streams", value: "Science & Commerce" },
+                  { label: "Classes", value: "Pre-Nursery to Class XII" },
+                  { label: "Streams", value: "Science" },
                   { label: "Medium", value: "English" },
                 ].map((row) => (
                   <tr key={row.label}>
