@@ -19,6 +19,11 @@ const dashboardItems = [
     href: "/admin/dashboard/gallery",
   },
   {
+    title: "Website Images",
+    description: "Replace the logo, campus photos, and featured website images.",
+    href: "/admin/dashboard/images",
+  },
+  {
     title: "Mandatory Disclosure",
     description: "Manage required school documents.",
     href: "/admin/dashboard/mandatory-disclosure",

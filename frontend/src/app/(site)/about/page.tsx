@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import { Crest } from "@/components/crest";
+import { SiteImage } from "@/components/site-image-provider";
 import {
   FeatureRow,
   InfoCard,
@@ -61,20 +61,18 @@ export default function AboutPage() {
           </div>
           <div className="grid gap-4">
             <div className="relative h-64 overflow-hidden rounded-2xl shadow-lg sm:h-80">
-              <Image
-                src="/images/campus2.jpg"
+              <SiteImage
+                slot="aboutCampus"
                 alt="School building"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
             <div className="relative h-48 overflow-hidden rounded-2xl shadow-lg">
-              <Image
-                src="/images/campus1.jpg"
+              <SiteImage
+                slot="aboutLibrary"
                 alt="School library"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

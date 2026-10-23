@@ -67,15 +67,23 @@ create table if not exists mandatory_disclosures (
 create table if not exists mandatory_disclosure_content (
   key text primary key, payload jsonb not null, created_at timestamptz not null default now(), updated_at timestamptz not null default now()
 );
+create table if not exists website_images (
+  slot text primary key,
+  storage_path text not null,
+  content_type text not null default 'image/webp',
+  updated_at timestamptz not null default now()
+);
 
 -- Server routes use DATABASE_URL. Keep browser access closed until explicit RLS policies are designed.
 alter table admins enable row level security; alter table notices enable row level security; alter table school_books enable row level security;
 alter table school_events enable row level security; alter table school_exam_results enable row level security; alter table exam_import_drafts enable row level security;
 alter table gallery enable row level security; alter table school_staff enable row level security; alter table mandatory_disclosures enable row level security;
 alter table mandatory_disclosure_content enable row level security;
+alter table website_images enable row level security;
 
 insert into storage.buckets (id, name, public) values
   ('gallery-images', 'gallery-images', true),
   ('staff-photos', 'staff-photos', true),
-  ('mandatory-disclosure-files', 'mandatory-disclosure-files', false)
+  ('mandatory-disclosure-files', 'mandatory-disclosure-files', false),
+  ('site-images', 'site-images', true)
 on conflict (id) do update set public = excluded.public;

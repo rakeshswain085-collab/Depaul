@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
+import { SiteImage } from "@/components/site-image-provider";
 import { InfoCard, PageHero, Section, SectionHeading } from "@/components/ui";
 import { ACADEMICS, SCHOOL } from "@/lib/site";
 
@@ -88,11 +88,10 @@ export default function AcademicsPage() {
       <Section className="bg-navy-900">
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="relative h-72 overflow-hidden rounded-2xl shadow-xl sm:h-96">
-            <Image
-              src="/images/science-lab.jpg"
+            <SiteImage
+              slot="scienceLab"
               alt="Science laboratory"
               fill
-              sizes="(max-width: 1024px) 100vw, 50vw"
               className="object-cover"
             />
           </div>

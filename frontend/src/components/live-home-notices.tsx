@@ -88,8 +88,7 @@ export function LiveHomeNotices() {
 
       setNotices(publishedNotices);
       setError(false);
-    } catch (err) {
-      console.error("Homepage notices error:", err);
+    } catch {
       setError(true);
     } finally {
       setLoading(false);
@@ -97,13 +96,7 @@ export function LiveHomeNotices() {
   }, []);
 
   useEffect(() => {
-    void loadNotices();
-
-    const interval = window.setInterval(() => {
-      void loadNotices();
-    }, 30000);
-
-    return () => window.clearInterval(interval);
+    void Promise.resolve().then(loadNotices);
   }, [loadNotices]);
 
   // All selected Latest notices appear first.

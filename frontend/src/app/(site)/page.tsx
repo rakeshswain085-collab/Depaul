@@ -1,5 +1,5 @@
-import Image from "next/image";
 import Link from "next/link";
+import { SiteImage } from "@/components/site-image-provider";
 import { PublicEvents } from "@/components/public-events";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { GalleryViewer } from "@/components/gallery-viewer";
@@ -44,12 +44,11 @@ export default async function HomePage() {
     <>
       {/* ---------------- HERO ---------------- */}
       <section className="relative isolate overflow-hidden bg-navy-900">
-        <Image
-          src="/images/school-campus.png"
+        <SiteImage
+          slot="homeHero"
           alt="De-Paul Senior Secondary School campus"
           fill
           priority
-          sizes="100vw"
           className="object-cover opacity-35"
         />
 <div className="absolute inset-0 bg-gradient-to-r from-navy-950/55 via-navy-900/30 to-navy-900/10" />
@@ -128,8 +127,8 @@ export default async function HomePage() {
 
     {/* SCHOOL LOGO */}
     <div className="flex min-w-0 items-center justify-center border-r border-slate-200 pr-3 sm:pr-5">
-      <img
-        src="/images/school-logo.png"
+      <SiteImage
+        slot="schoolLogo"
         alt="De-Paul School Aska Logo"
 className="h-auto w-full max-w-[115px] object-contain"
       />
@@ -219,11 +218,10 @@ className="h-auto w-full max-w-[115px] object-contain"
         <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
           <div className="relative">
             <div className="relative h-72 overflow-hidden rounded-2xl shadow-xl sm:h-96">
-              <Image
-                src="/images/campus.jpg"
+              <SiteImage
+                slot="homeCampus"
                 alt="De-Paul School campus"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
@@ -285,9 +283,9 @@ className="h-auto w-full max-w-[115px] object-contain"
     {/* Cards */}
     <div className="grid gap-6 md:grid-cols-2">
       {[
-        { message: chairman, image: "/images/chairman.jpg" },
-        { message: principal, image: "/images/principal.jpg" },
-      ].map(({ message, image }) =>
+        { message: chairman, imageSlot: "chairman" as const },
+        { message: principal, imageSlot: "principal" as const },
+      ].map(({ message, imageSlot }) =>
         message ? (
           <article
             key={message.id}
@@ -303,11 +301,10 @@ className="h-auto w-full max-w-[115px] object-contain"
 
               <div className="absolute inset-x-5 top-full flex -translate-y-1/2 items-end gap-4">
                 <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-full border-4 border-white bg-[#dce9f5] shadow-md ring-2 ring-amber-400">
-                  <Image
-                    src={image}
+                  <SiteImage
+                    slot={imageSlot}
                     alt={message.name}
                     fill
-                    sizes="96px"
                     className="object-cover object-top"
                   />
                 </div>

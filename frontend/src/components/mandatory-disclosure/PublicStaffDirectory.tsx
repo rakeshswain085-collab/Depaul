@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { SiteImage } from "@/components/site-image-provider";
 
 type Category = "PGT Teachers" | "TGT Teachers" | "PRT Teachers";
 
@@ -24,9 +25,6 @@ const CATEGORIES: Category[] = [
 
 const PRINCIPAL_NAME = "Ms. Rajani Panda";
 const PRINCIPAL_DESIGNATION = "Principal";
-// Add the principal's photo at public/images/principal.jpg.
-// If the file is missing, initials will be shown instead.
-
 export default function PublicStaffDirectory() {
   const [staff, setStaff] = useState<Staff[]>([]);
   const [selectedCategory, setSelectedCategory] =
@@ -108,10 +106,8 @@ export default function PublicStaffDirectory() {
       <section className="flex flex-col items-center text-center">
         <div className="relative flex h-36 w-36 items-center justify-center overflow-hidden rounded-full border-4 border-white bg-slate-100 shadow-lg ring-1 ring-slate-200 sm:h-40 sm:w-40">
           {!principalPhotoFailed ? (
-            // Put the principal's image at public/images/principal.jpg.
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              src="/images/principal.jpg"
+            <SiteImage
+              slot="principal"
               alt={PRINCIPAL_NAME}
               onError={() => setPrincipalPhotoFailed(true)}
               className="h-full w-full object-cover object-top"

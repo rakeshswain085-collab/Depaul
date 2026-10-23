@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SiteImage } from "@/components/site-image-provider";
 import { InfoCard, PageHero, Section, SectionHeading } from "@/components/ui";
 import { ACHIEVEMENTS } from "@/lib/site";
 
@@ -58,20 +58,18 @@ export default function AchievementsPage() {
           </div>
           <div className="grid gap-4">
             <div className="relative h-56 overflow-hidden rounded-2xl shadow-xl">
-              <Image
-                src="/images/cultural.jpg"
+              <SiteImage
+                slot="cultural"
                 alt="Cultural programme"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>
             <div className="relative h-56 overflow-hidden rounded-2xl shadow-xl">
-              <Image
-                src="/images/sports.jpg"
+              <SiteImage
+                slot="sports"
                 alt="Sports day"
                 fill
-                sizes="(max-width: 1024px) 100vw, 50vw"
                 className="object-cover"
               />
             </div>

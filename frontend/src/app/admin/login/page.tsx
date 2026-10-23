@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { SiteImage } from "@/components/site-image-provider";
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -66,8 +67,8 @@ export default function AdminLoginPage() {
           <div className="relative">
             <div className="mb-8 flex items-center gap-4">
               <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-2xl border border-white/15 bg-white p-1.5 shadow-lg shadow-black/20">
-                <img
-                  src="/images/school-logo.png"
+                <SiteImage
+                  slot="schoolLogo"
                   alt="De-Paul School crest"
                   className="h-full w-full object-contain"
                 />

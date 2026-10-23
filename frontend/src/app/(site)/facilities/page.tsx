@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Image from "next/image";
+import { SiteImage } from "@/components/site-image-provider";
 import { PageHero, Section, SectionHeading } from "@/components/ui";
 import { FACILITIES } from "@/lib/site";
 
@@ -11,26 +11,26 @@ export const metadata: Metadata = {
 
 const SHOWCASE = [
   {
-    image: "/images/science-lab.jpg",
+    imageSlot: "scienceLab",
     title: "Science Laboratories",
     body: "Separate physics, chemistry and biology work areas where students perform experiments linked to their syllabus.",
   },
   {
-    image: "/images/library.jpg",
+    imageSlot: "library",
     title: "Library & Reading Room",
     body: "A calm reading space with story books, reference titles, newspapers and magazines for all age groups.",
   },
   {
-    image: "/images/sports.jpg",
+    imageSlot: "sports",
     title: "Playground & Sports",
     body: "Open ground for athletics, football, kabaddi, volleyball and annual sports day competitions.",
   },
   {
-    image: "/images/cultural.jpg",
+    imageSlot: "cultural",
     title: "Auditorium & Stage",
     body: "A stage and assembly area used for cultural programmes, competitions, celebrations and school functions.",
   },
-];
+] as const;
 
 export default function FacilitiesPage() {
   return (
@@ -74,11 +74,10 @@ export default function FacilitiesPage() {
               className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
             >
               <div className="relative h-56">
-                <Image
-                  src={item.image}
+                <SiteImage
+                  slot={item.imageSlot}
                   alt={item.title}
                   fill
-                  sizes="(max-width: 640px) 100vw, 50vw"
                   className="object-cover"
                 />
               </div>
