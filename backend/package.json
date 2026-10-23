@@ -2,7 +2,21 @@
   "name": "depaul-school-backend",
   "private": true,
   "type": "module",
-  "scripts": { "dev": "tsx watch src/server.ts", "start": "tsx src/server.ts", "typecheck": "tsc --noEmit" },
-  "dependencies": { "bcryptjs": "^3.0.3", "cors": "^2.8.5", "dotenv": "^17.3.1", "express": "^5.1.0", "jose": "^6.2.13", "pg": "^8.20.0" },
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "tsc --noEmit",
+    "db:create-admin": "node scripts/create-supabase-admin.mjs",
+    "db:migrate-mongo": "node scripts/migrate-mongodb-to-supabase.mjs"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.5",
+    "dotenv": "^17.3.1",
+    "express": "^5.1.0",
+    "jose": "^6.2.13",
+    "mongoose": "^9.11.2",
+    "pg": "^8.20.0"
+  },
   "devDependencies": { "@types/cors": "^2.8.19", "@types/express": "^5.0.1", "@types/node": "^22.19.15", "tsx": "^4.20.6", "typescript": "^5.9.3" }
 }

@@ -7,6 +7,8 @@
     "frontend:build": "npm --prefix frontend run build",
     "frontend:typecheck": "npm --prefix frontend run typecheck",
     "backend:dev": "npm --prefix backend run dev",
-    "backend:typecheck": "npm --prefix backend run typecheck"
+    "backend:typecheck": "npm --prefix backend run typecheck",
+    "db:create-admin": "npm --prefix backend run db:create-admin",
+    "db:migrate-mongo": "npm --prefix backend run db:migrate-mongo"
   }
 }

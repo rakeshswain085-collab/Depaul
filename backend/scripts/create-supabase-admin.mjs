@@ -1,11 +1,11 @@
 import dotenv from "dotenv";
-import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import bcrypt from "bcryptjs";
 import pg from "pg";
 import { createInterface } from "node:readline/promises";
 import { stdin as input, stdout as output } from "node:process";
 
-dotenv.config({ path: resolve(process.cwd(), ".env.local") });
+dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
 
 const { DATABASE_URL, ADMIN_EMAIL, ADMIN_INITIAL_PASSWORD } = process.env;
 const email = ADMIN_EMAIL?.trim().toLowerCase();

@@ -1,14 +1,14 @@
 /*
  * One-time, idempotent MongoDB -> Supabase migration.
- * Apply supabase/migrations/001_school_data.sql first. It keeps Mongo ObjectIds
+ * Apply backend/supabase/migrations/001_school_data.sql first. It keeps Mongo ObjectIds
  * as text primary keys so application links and imported files remain stable.
  */
 import dotenv from "dotenv";
-import { resolve } from "node:path";
+import { fileURLToPath } from "node:url";
 import mongoose from "mongoose";
 import pg from "pg";
 
-dotenv.config({ path: resolve(process.cwd(), ".env.local") });
+dotenv.config({ path: fileURLToPath(new URL("../.env", import.meta.url)) });
 
 const { MONGODB_URI, DATABASE_URL, SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = process.env;
 if (!MONGODB_URI || !DATABASE_URL || !SUPABASE_URL || !SUPABASE_SERVICE_ROLE_KEY) {
