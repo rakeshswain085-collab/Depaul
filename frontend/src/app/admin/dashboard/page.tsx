@@ -41,7 +41,7 @@ const dashboardItems = [
   {
     title: "Admission Enquiries",
     description: "Review enquiries submitted by parents.",
-    href: "/admin/dashboard/admission-enquiries",
+    href: "/admin/dashboard/enquiries",
   },
   {
     title: "Website Settings",

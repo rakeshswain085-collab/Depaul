@@ -74,48 +74,56 @@ export default async function HomePage() {
               welcoming educational environment where students are encouraged to
               learn, participate, develop confidence and grow with values.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="#events"
-                className="rounded-lg bg-gold-400 px-6 py-3 text-sm font-bold uppercase tracking-wider text-navy-900 transition hover:bg-gold-300"
-              >
-                View School Events
-              </Link>
-              <Link
-                href="#latest-notice"
-                className="rounded-lg bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-wider text-white ring-1 ring-white/30 transition hover:bg-white/20"
-              >
-                Latest Notice
-              </Link>
-              <Link
-                href="/admission"
-                className="rounded-lg bg-white/10 px-6 py-3 text-sm font-bold uppercase tracking-wider text-white ring-1 ring-white/30 transition hover:bg-white/20"
-              >
-                Admission
-              </Link>
-              <Link
-                href="/admin/login"
-                className="inline-flex items-center gap-2 rounded-lg bg-gold-400 px-6 py-3 text-sm font-bold uppercase tracking-wider text-navy-900 shadow-sm transition hover:bg-gold-300"
-              >
-                Admin Login
-              </Link>
-            </div>
-            <dl className="mt-10 grid max-w-xl grid-cols-3 gap-4 border-t border-white/15 pt-6 text-white">
-              {[
-                { value: "26+", label: "Years of Excellence" },
-                { value: "600+", label: "Students" },
-                { value: "Pre-Nur–XII", label: "Classes Offered" },
-              ].map((stat) => (
-                <div key={stat.label}>
-                  <dt className="text-2xl font-extrabold text-gold-300">
-                    {stat.value}
-                  </dt>
-                  <dd className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-navy-200">
-                    {stat.label}
-                  </dd>
-                </div>
-              ))}
-            </dl>
+    
+<div className="mt-6 grid grid-cols-2 gap-2.5 sm:mt-8 sm:gap-3 lg:flex lg:flex-wrap lg:gap-3">
+  <Link
+    href="#events"
+    className="inline-flex min-h-12 items-center justify-center rounded-xl bg-gold-400 px-3 py-3 text-center text-xs font-bold uppercase leading-tight tracking-wide text-navy-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-md sm:px-5 sm:text-sm lg:px-6"
+  >
+    View School Events
+  </Link>
+
+  <Link
+    href="#latest-notice"
+    className="inline-flex min-h-12 items-center justify-center rounded-xl bg-white/10 px-3 py-3 text-center text-xs font-bold uppercase leading-tight tracking-wide text-white ring-1 ring-white/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:px-5 sm:text-sm lg:px-6"
+  >
+    Latest Notice
+  </Link>
+
+  <Link
+    href="/admission"
+    className="inline-flex min-h-12 items-center justify-center rounded-xl bg-white/10 px-3 py-3 text-center text-xs font-bold uppercase leading-tight tracking-wide text-white ring-1 ring-white/30 transition-all duration-300 hover:-translate-y-0.5 hover:bg-white/20 sm:px-5 sm:text-sm lg:px-6"
+  >
+    Admission
+  </Link>
+
+  <Link
+    href="/admin/login"
+    className="inline-flex min-h-12 items-center justify-center rounded-xl bg-gold-400 px-3 py-3 text-center text-xs font-bold uppercase leading-tight tracking-wide text-navy-900 shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:bg-gold-300 hover:shadow-md sm:px-5 sm:text-sm lg:px-6"
+  >
+    Admin Login
+  </Link>
+</div>
+
+  
+<dl className="mt-6 grid w-full max-w-xl grid-cols-3 gap-2 border-t border-white/15 pt-4 text-white sm:mt-10 sm:gap-4 sm:pt-6">
+  {[
+    { value: "26+", label: "Years of Excellence" },
+    { value: "600+", label: "Students" },
+    { value: "Pre-Nur–XII", label: "Classes Offered" },
+  ].map((stat) => (
+    <div key={stat.label} className="min-w-0">
+      <dt className="whitespace-nowrap text-base font-extrabold leading-tight text-gold-300 sm:text-2xl lg:text-3xl">
+        {stat.value}
+      </dt>
+
+      <dd className="mt-1 text-[8px] font-semibold uppercase leading-tight tracking-normal text-navy-200 sm:text-[11px] sm:tracking-wider">
+        {stat.label}
+      </dd>
+    </div>
+  ))}
+</dl>
+
           </div>
 
 
@@ -213,53 +221,139 @@ className="h-auto w-full max-w-[115px] object-contain"
       {/* ---------------- LIVE NOTICES ---------------- */}
       <LiveHomeNotices />
 
-      {/* ---------------- ABOUT ---------------- */}
-      <Section id="about">
-        <div className="grid gap-10 lg:grid-cols-2 lg:items-center">
-          <div className="relative">
-            <div className="relative h-72 overflow-hidden rounded-2xl shadow-xl sm:h-96">
-              <SiteImage
-                slot="homeCampus"
-                alt="De-Paul School campus"
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div className="absolute -bottom-6 left-6 rounded-xl bg-gold-400 px-5 py-3 shadow-lg">
-              <p className="text-xs font-bold uppercase tracking-widest text-navy-900">
-                Established
-              </p>
-              <p className="text-2xl font-extrabold text-navy-900">
-                {SCHOOL.established}
-              </p>
-            </div>
+
+{/* ---------------- ABOUT ---------------- */}
+<Section id="about">
+  <div className="grid gap-6 lg:grid-cols-2 lg:items-center lg:gap-12">
+
+    {/* TEXT AND SCHOOL INFORMATION — FIRST */}
+    <div className="order-1 min-w-0">
+
+      <SectionHeading
+        eyebrow="About the School"
+        title="Welcome to our school"
+        align="left"
+        description="De-Paul Senior Secondary School, Aska — we provide a welcoming educational environment where students are encouraged to learn, participate, develop confidence and grow with values."
+      />
+
+      {/* COMPACT SCHOOL INFORMATION */}
+      <div className="mt-5 grid grid-cols-2 gap-2.5 sm:mt-6 sm:gap-3">
+
+        {/* Location */}
+        <div className="rounded-xl border border-slate-200 bg-white p-3 transition-colors hover:border-amber-300 sm:p-4">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-base">
+              📍
+            </span>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 sm:text-xs">
+              Location
+            </p>
           </div>
-          <div>
-            <SectionHeading
-              eyebrow="About the School"
-              title="Welcome to our school"
-              align="left"
-              description="De-Paul Senior Secondary School, Aska — we provide a welcoming educational environment where students are encouraged to learn, participate, develop confidence and grow with values."
-            />
-            <div className="mt-7 grid gap-3 sm:grid-cols-2">
-              <FeatureRow icon="📍" label="Location" value="Aska, Ganjam, Odisha" />
-              <FeatureRow
-                icon="🎓"
-                label="Board"
-                value="Central Board of Secondary Education"
-              />
-              <FeatureRow icon="🏷️" label="Affiliation No." value={SCHOOL.affiliation} />
-              <FeatureRow icon="🏛️" label="Classes" value="Pre-Nursery to Class XII" />
-            </div>
-            <Link
-              href="/about"
-              className="mt-7 inline-block rounded-lg bg-navy-800 px-6 py-3 text-sm font-bold uppercase tracking-wider text-white transition hover:bg-navy-700"
-            >
-              More About Us
-            </Link>
-          </div>
+
+          <p className="mt-2 text-sm font-semibold leading-5 text-navy-800 sm:text-base">
+            Aska, Ganjam, Odisha
+          </p>
         </div>
-      </Section>
+
+        {/* Board */}
+        <div className="rounded-xl border border-slate-200 bg-white p-3 transition-colors hover:border-amber-300 sm:p-4">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-base">
+              🎓
+            </span>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 sm:text-xs">
+              Board
+            </p>
+          </div>
+
+          <p className="mt-2 text-sm font-semibold leading-5 text-navy-800 sm:text-base">
+            Central Board of Secondary Education
+          </p>
+        </div>
+
+        {/* Affiliation */}
+        <div className="rounded-xl border border-slate-200 bg-white p-3 transition-colors hover:border-amber-300 sm:p-4">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-base">
+              🏷️
+            </span>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 sm:text-xs">
+              Affiliation No.
+            </p>
+          </div>
+
+          <p className="mt-2 text-sm font-semibold leading-5 text-navy-800 sm:text-base">
+            {SCHOOL.affiliation}
+          </p>
+        </div>
+
+        {/* Classes */}
+        <div className="rounded-xl border border-slate-200 bg-white p-3 transition-colors hover:border-amber-300 sm:p-4">
+          <div className="flex items-center gap-2">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-50 text-base">
+              🏛️
+            </span>
+            <p className="text-[10px] font-bold uppercase tracking-wider text-amber-700 sm:text-xs">
+              Classes
+            </p>
+          </div>
+
+          <p className="mt-2 text-sm font-semibold leading-5 text-navy-800 sm:text-base">
+            Pre-Nursery to Class XII
+          </p>
+        </div>
+
+      </div>
+
+      {/* MORE ABOUT BUTTON */}
+      <Link
+        href="/about"
+        className="mt-5 inline-flex items-center gap-2 rounded-lg bg-navy-800 px-5 py-3 text-xs font-bold uppercase tracking-wider text-white transition-all duration-300 hover:bg-navy-700 sm:mt-6 sm:px-6 sm:text-sm"
+      >
+        More About Us
+
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+          aria-hidden="true"
+        >
+          <path d="M5 12h14M13 6l6 6-6 6" />
+        </svg>
+      </Link>
+
+    </div>
+
+    {/* CAMPUS IMAGE — AFTER TEXT ON MOBILE */}
+    <div className="relative order-2 min-w-0 pb-5 lg:pb-0">
+
+      <div className="relative h-52 overflow-hidden rounded-2xl shadow-lg sm:h-72 lg:h-[420px]">
+        <SiteImage
+          slot="homeCampus"
+          alt="De-Paul School campus"
+          fill
+          className="object-cover transition-transform duration-700 hover:scale-[1.02]"
+        />
+      </div>
+
+      {/* ESTABLISHED BADGE */}
+      <div className="absolute -bottom-1 left-4 rounded-xl bg-gold-400 px-4 py-2.5 shadow-lg sm:left-6 sm:px-5 sm:py-3">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-navy-900 sm:text-xs">
+          Established
+        </p>
+
+        <p className="text-xl font-extrabold text-navy-900 sm:text-2xl">
+          {SCHOOL.established}
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</Section>
 
 
 
@@ -361,168 +455,151 @@ className="h-auto w-full max-w-[115px] object-contain"
       events, activities, and memorable moments from our campus.
     </p>
 
-    <div className="mx-auto mt-12 grid max-w-5xl gap-7 md:grid-cols-2">
+   {/* ---------------- SOCIAL MEDIA SECTION ---------------- */}
+<div className="grid grid-cols-2 items-stretch gap-3 sm:gap-5 lg:gap-6">
 
-      {/* ---------------- YOUTUBE CARD ---------------- */}
-      <a
-        href={SCHOOL.youtube}
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Visit De-Paul School Aska YouTube Channel"
-        className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-500 hover:-translate-y-2 hover:border-red-200 hover:shadow-[0_20px_50px_rgba(239,68,68,0.12)] sm:p-8"
-      >
-        {/* Top Accent */}
-        <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-red-500 via-red-400 to-orange-300" />
+  {/* ---------------- YOUTUBE CARD ---------------- */}
+  <a
+    href={SCHOOL.youtube}
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visit De-Paul School Aska YouTube Channel"
+    className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-red-100 bg-white p-3 shadow-[0_5px_20px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-red-200 hover:shadow-[0_12px_30px_rgba(239,68,68,0.10)] sm:rounded-3xl sm:p-6 lg:p-8"
+  >
+    <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-red-500 via-red-400 to-orange-300" />
 
-        {/* Decorative Circle */}
-        <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-red-50 transition-transform duration-500 group-hover:scale-150" />
+    <div className="absolute -right-7 -top-7 h-24 w-24 rounded-full bg-red-50 transition-transform duration-500 group-hover:scale-125 sm:-right-12 sm:-top-12 sm:h-40 sm:w-40" />
 
-        <div className="relative">
-
-          <div className="flex items-start justify-between">
-
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-red-50 transition-all duration-500 group-hover:scale-110 group-hover:bg-red-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-9 w-9"
-                aria-hidden="true"
-              >
-                <path
-                  fill="#FF0033"
-                  d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"
-                />
-                <path
-                  fill="#FFFFFF"
-                  d="m9.6 15.6 6.2-3.6-6.2-3.6v7.2Z"
-                />
-              </svg>
-            </div>
-
-            <span className="rounded-full border border-red-100 bg-red-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-red-600">
-              Official Channel
-            </span>
-
-          </div>
-
-          <div className="mt-7">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-red-600">
-              YouTube
-            </p>
-
-            <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-navy-800 sm:text-3xl">
-              School Moments
-            </h3>
-
-            <p className="mt-3 max-w-sm text-sm leading-7 text-slate-500">
-              Watch celebrations, cultural programs, school events,
-              student performances, and special memories.
-            </p>
-          </div>
-
-          <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
-
-            <span className="break-all text-sm font-semibold text-slate-700">
-              @de-paulschoolaska1840
-            </span>
-
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-red-600 group-hover:text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </span>
-
-          </div>
+    <div className="relative flex h-full flex-col">
+      <div className="flex items-start justify-between gap-1.5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-red-50 transition-all duration-300 group-hover:bg-red-100 sm:h-14 sm:w-14 sm:rounded-2xl lg:h-16 lg:w-16">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9"
+            aria-hidden="true"
+          >
+            <path
+              fill="#FF0033"
+              d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8Z"
+            />
+            <path fill="#FFFFFF" d="m9.6 15.6 6.2-3.6-6.2-3.6v7.2Z" />
+          </svg>
         </div>
-      </a>
 
-      {/* ---------------- FACEBOOK CARD ---------------- */}
-      <a
-        href="https://www.facebook.com/depaulschoolaska"
-        target="_blank"
-        rel="noopener noreferrer"
-        aria-label="Visit De-Paul School Aska Facebook Page"
-        className="group relative overflow-hidden rounded-3xl border border-slate-200/80 bg-white p-6 shadow-[0_8px_30px_rgba(15,23,42,0.04)] transition-all duration-500 hover:-translate-y-2 hover:border-blue-200 hover:shadow-[0_20px_50px_rgba(37,99,235,0.12)] sm:p-8"
-      >
-        {/* Top Accent */}
-        <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300" />
+        <span className="rounded-full border border-red-100 bg-red-50 px-1.5 py-1 text-[7px] font-bold uppercase leading-tight tracking-wide text-red-600 sm:px-2.5 sm:text-[9px] lg:px-3 lg:py-1.5 lg:text-[10px]">
+          Official Channel
+        </span>
+      </div>
 
-        {/* Decorative Circle */}
-        <div className="absolute -right-12 -top-12 h-40 w-40 rounded-full bg-blue-50 transition-transform duration-500 group-hover:scale-150" />
+      <div className="mt-4 sm:mt-6 lg:mt-7">
+        <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-red-600 sm:text-[11px] sm:tracking-[0.2em] lg:text-xs">
+          YouTube
+        </p>
 
-        <div className="relative">
+        <h3 className="mt-1.5 text-base font-extrabold leading-tight tracking-tight text-navy-800 sm:text-xl lg:text-3xl">
+          School Moments
+        </h3>
 
-          <div className="flex items-start justify-between">
+        <p className="mt-2 text-[11px] leading-5 text-slate-500 sm:mt-3 sm:text-sm sm:leading-6 lg:max-w-sm lg:text-base lg:leading-7">
+          Watch celebrations, cultural programs, school events, student
+          performances, and special memories.
+        </p>
+      </div>
 
-            <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-blue-50 transition-all duration-500 group-hover:scale-110 group-hover:bg-blue-100">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                className="h-9 w-9"
-                aria-hidden="true"
-              >
-                <path
-                  fill="#1877F2"
-                  d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.49 0-1.956.93-1.956 1.884v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.079 24 18.092 24 12.073Z"
-                />
-              </svg>
-            </div>
+      <div className="mt-auto flex items-center justify-between gap-1.5 border-t border-slate-100 pt-3 mt-4 sm:mt-6 sm:pt-4 lg:mt-8 lg:pt-5">
+        <span className="min-w-0 break-all text-[9px] font-semibold leading-4 text-slate-700 sm:text-xs lg:text-sm">
+          @de-paulschoolaska1840
+        </span>
 
-            <span className="rounded-full border border-blue-100 bg-blue-50 px-3 py-1.5 text-[10px] font-bold uppercase tracking-widest text-blue-600">
-              Official Page
-            </span>
-
-          </div>
-
-          <div className="mt-7">
-            <p className="text-xs font-bold uppercase tracking-[0.2em] text-blue-600">
-              Facebook
-            </p>
-
-            <h3 className="mt-2 text-2xl font-extrabold tracking-tight text-navy-800 sm:text-3xl">
-              Our School Community
-            </h3>
-
-            <p className="mt-3 max-w-sm text-sm leading-7 text-slate-500">
-              Explore school announcements, achievements, photographs,
-              educational activities, and community updates.
-            </p>
-          </div>
-
-          <div className="mt-8 flex items-center justify-between border-t border-slate-100 pt-5">
-
-            <span className="text-sm font-semibold text-slate-700">
-              De-Paul School Aska
-            </span>
-
-            <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-all duration-300 group-hover:translate-x-1 group-hover:bg-blue-600 group-hover:text-white">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                className="h-5 w-5"
-                aria-hidden="true"
-              >
-                <path d="M5 12h14M13 6l6 6-6 6" />
-              </svg>
-            </span>
-
-          </div>
-        </div>
-      </a>
-
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-red-50 text-red-600 transition-all duration-300 group-hover:bg-red-600 group-hover:text-white sm:h-9 sm:w-9 lg:h-10 lg:w-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="h-4 w-4 sm:h-5 sm:w-5"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </div>
     </div>
+  </a>
 
+  {/* ---------------- FACEBOOK CARD ---------------- */}
+  <a
+    href="https://www.facebook.com/depaulschoolaska"
+    target="_blank"
+    rel="noopener noreferrer"
+    aria-label="Visit De-Paul School Aska Facebook Page"
+    className="group relative flex min-w-0 flex-col overflow-hidden rounded-2xl border border-blue-100 bg-white p-3 shadow-[0_5px_20px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-[0_12px_30px_rgba(37,99,235,0.10)] sm:rounded-3xl sm:p-6 lg:p-8"
+  >
+    <div className="absolute left-0 top-0 h-1 w-full bg-gradient-to-r from-blue-700 via-blue-500 to-sky-300" />
+
+    <div className="absolute -right-7 -top-7 h-24 w-24 rounded-full bg-blue-50 transition-transform duration-500 group-hover:scale-125 sm:-right-12 sm:-top-12 sm:h-40 sm:w-40" />
+
+    <div className="relative flex h-full flex-col">
+      <div className="flex items-start justify-between gap-1.5">
+        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-blue-50 transition-all duration-300 group-hover:bg-blue-100 sm:h-14 sm:w-14 sm:rounded-2xl lg:h-16 lg:w-16">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            className="h-6 w-6 sm:h-8 sm:w-8 lg:h-9 lg:w-9"
+            aria-hidden="true"
+          >
+            <path
+              fill="#1877F2"
+              d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073c0 6.019 4.388 11.006 10.125 11.927v-8.437H7.078v-3.49h3.047V9.413c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.236 2.686.236v2.97h-1.513c-1.49 0-1.956.93-1.956 1.884v2.267h3.328l-.532 3.49h-2.796V24C19.612 23.079 24 18.092 24 12.073Z"
+            />
+          </svg>
+        </div>
+
+        <span className="rounded-full border border-blue-100 bg-blue-50 px-1.5 py-1 text-[7px] font-bold uppercase leading-tight tracking-wide text-blue-600 sm:px-2.5 sm:text-[9px] lg:px-3 lg:py-1.5 lg:text-[10px]">
+          Official Page
+        </span>
+      </div>
+
+      <div className="mt-4 sm:mt-6 lg:mt-7">
+        <p className="text-[9px] font-bold uppercase tracking-[0.15em] text-blue-600 sm:text-[11px] sm:tracking-[0.2em] lg:text-xs">
+          Facebook
+        </p>
+
+        <h3 className="mt-1.5 text-base font-extrabold leading-tight tracking-tight text-navy-800 sm:text-xl lg:text-3xl">
+          Our School Community
+        </h3>
+
+        <p className="mt-2 text-[11px] leading-5 text-slate-500 sm:mt-3 sm:text-sm sm:leading-6 lg:max-w-sm lg:text-base lg:leading-7">
+          Explore school announcements, achievements, photographs,
+          educational activities, and community updates.
+        </p>
+      </div>
+
+      <div className="mt-auto flex items-center justify-between gap-1.5 border-t border-slate-100 pt-3 mt-4 sm:mt-6 sm:pt-4 lg:mt-8 lg:pt-5">
+        <span className="min-w-0 text-[9px] font-semibold leading-4 text-slate-700 sm:text-xs lg:text-sm">
+          De-Paul School Aska
+        </span>
+
+        <span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-blue-50 text-blue-600 transition-all duration-300 group-hover:bg-blue-600 group-hover:text-white sm:h-9 sm:w-9 lg:h-10 lg:w-10">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            className="h-4 w-4 sm:h-5 sm:w-5"
+            aria-hidden="true"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+        </span>
+      </div>
+    </div>
+  </a>
+
+</div>
     {/* Bottom Note */}
     <p className="mt-8 text-center text-xs font-medium tracking-wide text-slate-400">
       Connecting our school, students, parents, and community.
@@ -531,7 +608,7 @@ className="h-auto w-full max-w-[115px] object-contain"
   </div>
 </Section>
 
-```tsx
+
 {/* ---------------- EVENTS ---------------- */}
 <Section id="events" className="bg-slate-50">
   <SectionHeading
@@ -560,7 +637,6 @@ className="h-auto w-full max-w-[115px] object-contain"
     </Link>
   </div>
 </Section>
-```
       {/* ---------------- GALLERY ---------------- */}
       <Section id="gallery" className="bg-slate-50">
         <SectionHeading
@@ -582,107 +658,189 @@ className="h-auto w-full max-w-[115px] object-contain"
         </div>
       </Section>
 
-      {/* ---------------- ACADEMICS ---------------- */}
-      <Section id="academics">
-        <SectionHeading
-          eyebrow="Academics"
-          title="Academic Programmes"
-          description="Structured learning pathways from the foundational years to senior secondary education."
-        />
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {ACADEMICS.map((item) => (
-            <InfoCard key={item.title} icon={item.icon} title={item.title}>
-              {item.description}
-            </InfoCard>
-          ))}
-        </div>
-      </Section>
+  
+{/* ---------------- ACADEMICS ---------------- */}
+<Section id="academics" className="py-6 sm:py-10 lg:py-14">
+  <SectionHeading
+    eyebrow="Academics"
+    title="Academic Programmes"
+    description="Structured learning pathways from the foundational years to senior secondary education."
+  />
 
-      {/* ---------------- FACILITIES ---------------- */}
-      <Section id="facilities" className="bg-navy-900">
-        <SectionHeading eyebrow="Campus" title="School Facilities" tone="dark" />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {FACILITIES.map((item) => (
-            <div
-              key={item.title}
-              className="rounded-xl bg-navy-800/70 p-6 ring-1 ring-navy-700 transition hover:bg-navy-800"
-            >
-              <span className="text-3xl" aria-hidden>
-                {item.icon}
+  <div className="mt-6 grid grid-cols-2 items-stretch gap-2.5 sm:mt-8 sm:gap-4 lg:mt-10 lg:grid-cols-3 lg:gap-5">
+    {ACADEMICS.map((item) => (
+      <InfoCard
+        key={item.title}
+        icon={item.icon}
+        title={item.title}
+      >
+        {item.description}
+      </InfoCard>
+    ))}
+  </div>
+
+  {/* View All Academic Programmes */}
+  <div className="mt-5 flex justify-center sm:mt-7">
+    <Link
+      href="/academics"
+      className="inline-flex min-h-10 items-center justify-center gap-2 rounded-lg border border-navy-800 px-4 py-2.5 text-[11px] font-bold uppercase tracking-wide text-navy-800 transition-all duration-300 hover:bg-navy-800 hover:text-white sm:px-5 sm:text-xs"
+    >
+      Explore Academics
+      <span aria-hidden="true" className="text-base">
+        →
+      </span>
+    </Link>
+  </div>
+</Section>
+
+{/* ---------------- SCHOOL FACILITIES ---------------- */}
+<Section
+  id="facilities"
+  className="bg-navy-900 py-7 sm:py-10 lg:py-12"
+>
+  <SectionHeading
+    eyebrow="Campus"
+    title="School Facilities"
+    tone="dark"
+  />
+
+  <div className="mt-5 grid grid-cols-2 items-stretch gap-2.5 sm:mt-7 sm:gap-4 lg:mt-8 lg:grid-cols-3 lg:gap-5">
+    {FACILITIES.map((item) => (
+      <article
+        key={item.title}
+        className="group min-w-0 rounded-xl bg-navy-800/70 p-3 ring-1 ring-navy-700 transition-all duration-300 hover:bg-navy-800 hover:ring-gold-400/60 sm:rounded-2xl sm:p-4 lg:p-5"
+      >
+        {/* Icon */}
+        <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-white/5 text-lg sm:h-10 sm:w-10 sm:text-xl">
+          {item.icon}
+        </div>
+
+        {/* Title */}
+        <h3 className="mt-3 text-sm font-bold leading-5 text-white sm:mt-3.5 sm:text-base sm:leading-6 lg:text-lg">
+          {item.title}
+        </h3>
+
+        {/* Description */}
+        <p className="mt-1.5 text-xs leading-5 text-navy-200 sm:mt-2 sm:text-sm sm:leading-6">
+          {item.description}
+        </p>
+      </article>
+    ))}
+  </div>
+</Section>
+
+   
+{/* ---------------- ACHIEVEMENTS ---------------- */}
+<Section id="achievements" className="py-6 sm:py-9 lg:py-12">
+  <SectionHeading
+    eyebrow="Student Life"
+    title="Achievements & Activities"
+    description="Our students excel in academics, sports, culture and innovation."
+  />
+
+  <div className="mt-5 grid grid-cols-2 items-stretch gap-2.5 sm:mt-7 sm:gap-4 lg:mt-9 lg:grid-cols-4 lg:gap-5">
+    {ACHIEVEMENTS.map((item) => (
+      <div
+        key={item.title}
+        className="min-w-0 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:border-amber-300 hover:shadow-md sm:rounded-2xl sm:p-4 lg:p-5"
+      >
+        <InfoCard
+          icon={item.icon}
+          title={item.title}
+        >
+          {item.description}
+        </InfoCard>
+      </div>
+    ))}
+  </div>
+</Section>
+
+
+{/* ---------------- ADMISSION ---------------- */}
+<Section id="admission" className="bg-gold-50">
+  <div className="mx-auto w-full max-w-7xl">
+    <div className="grid grid-cols-1 items-start gap-5 sm:gap-6 lg:grid-cols-[1.05fr_0.95fr] lg:gap-8 xl:gap-10">
+      {/* LEFT: Admission Information */}
+      <div className="min-w-0">
+        <SectionHeading
+          eyebrow="Admission"
+          title="Admission Information"
+          align="left"
+          description={settings.admission_intro}
+        />
+
+        {/* Information Cards */}
+        <div className="mt-4 grid grid-cols-1 gap-3 min-[420px]:grid-cols-2 sm:mt-5 sm:gap-4">
+          {/* Application */}
+          <article className="rounded-xl border border-gold-200 bg-white p-3.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-md sm:p-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold-50 text-lg">
+                📝
               </span>
-              <h3 className="mt-4 text-lg font-bold text-white">{item.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-navy-200">
-                {item.description}
-              </p>
+              <h3 className="text-sm font-bold text-navy-800 sm:text-base">
+                Application
+              </h3>
             </div>
-          ))}
-        </div>
-      </Section>
+            <p className="mt-2 break-words text-xs leading-5 text-slate-600 sm:text-[13px] sm:leading-relaxed">
+              {settings.admission_application}
+            </p>
+          </article>
 
-      {/* ---------------- ACHIEVEMENTS ---------------- */}
-      <Section id="achievements">
-        <SectionHeading
-          eyebrow="Student Life"
-          title="Achievements & Activities"
-          description="Our students excel in academics, sports, culture and innovation."
-        />
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {ACHIEVEMENTS.map((item) => (
-            <InfoCard key={item.title} icon={item.icon} title={item.title}>
-              {item.description}
-            </InfoCard>
-          ))}
-        </div>
-      </Section>
-
-      {/* ---------------- ADMISSION ---------------- */}
-      <Section id="admission" className="bg-gold-50">
-        <div className="grid gap-10 lg:grid-cols-[1.2fr_1fr]">
-          <div>
-            <SectionHeading
-              eyebrow="Admission"
-              title="Admission Information"
-              align="left"
-              description={settings.admission_intro}
-            />
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl border border-gold-200 bg-white p-5">
-                <p className="text-2xl">📝</p>
-                <h3 className="mt-3 text-base font-bold text-navy-800">
-                  Application
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {settings.admission_application}
-                </p>
-              </div>
-              <div className="rounded-xl border border-gold-200 bg-white p-5">
-                <p className="text-2xl">📅</p>
-                <h3 className="mt-3 text-base font-bold text-navy-800">Schedule</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {settings.admission_schedule}
-                </p>
-              </div>
-              <div className="rounded-xl border border-gold-200 bg-white p-5">
-                <p className="text-2xl">📄</p>
-                <h3 className="mt-3 text-base font-bold text-navy-800">Documents</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {settings.admission_documents}
-                </p>
-              </div>
-              <div className="rounded-xl border border-gold-200 bg-white p-5">
-                <p className="text-2xl">📞</p>
-                <h3 className="mt-3 text-base font-bold text-navy-800">Enquiry</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-600">
-                  {settings.admission_contact}
-                </p>
-              </div>
+          {/* Schedule */}
+          <article className="rounded-xl border border-gold-200 bg-white p-3.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-md sm:p-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold-50 text-lg">
+                📅
+              </span>
+              <h3 className="text-sm font-bold text-navy-800 sm:text-base">
+                Schedule
+              </h3>
             </div>
-          </div>
-          <div>
-            <EnquiryForm />
-          </div>
+            <p className="mt-2 break-words text-xs leading-5 text-slate-600 sm:text-[13px] sm:leading-relaxed">
+              {settings.admission_schedule}
+            </p>
+          </article>
+
+          {/* Documents */}
+          <article className="rounded-xl border border-gold-200 bg-white p-3.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-md sm:p-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold-50 text-lg">
+                📄
+              </span>
+              <h3 className="text-sm font-bold text-navy-800 sm:text-base">
+                Documents
+              </h3>
+            </div>
+            <p className="mt-2 break-words text-xs leading-5 text-slate-600 sm:text-[13px] sm:leading-relaxed">
+              {settings.admission_documents}
+            </p>
+          </article>
+
+          {/* Enquiry */}
+          <article className="rounded-xl border border-gold-200 bg-white p-3.5 shadow-sm transition duration-200 hover:-translate-y-0.5 hover:border-gold-400 hover:shadow-md sm:p-4">
+            <div className="flex items-center gap-2.5">
+              <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-gold-50 text-lg">
+                📞
+              </span>
+              <h3 className="text-sm font-bold text-navy-800 sm:text-base">
+                Enquiry
+              </h3>
+            </div>
+            <p className="mt-2 break-words text-xs leading-5 text-slate-600 sm:text-[13px] sm:leading-relaxed">
+              {settings.admission_contact}
+            </p>
+          </article>
         </div>
-      </Section>
+      </div>
+
+      {/* RIGHT: Admission Enquiry Form */}
+      <div className="min-w-0 rounded-xl border border-gold-200 bg-white p-3 shadow-sm sm:rounded-2xl sm:p-4 lg:p-4 xl:p-5">
+        <EnquiryForm />
+      </div>
+    </div>
+  </div>
+</Section>
+
 
       {/* ---------------- AFFILIATION ---------------- */}
       <Section id="affiliation">

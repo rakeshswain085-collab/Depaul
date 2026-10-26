@@ -472,7 +472,7 @@ export default function MandatoryDisclosureAdminPage() {
         ? `/api/staff/${encodeURIComponent(editingTeacherId)}`
         : "/api/staff";
       const response = await fetch(endpoint, {
-        method: editingTeacherId ? "PUT" : "POST",
+        method: editingTeacherId ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });

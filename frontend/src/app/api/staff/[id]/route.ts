@@ -25,7 +25,7 @@ type StaffRow = {
   updatedAt: Date | string;
 };
 
-const STAFF_FIELDS = `id as "_id", name, designation, subject, category,
+const STAFF_FIELDS = `id, name, designation, subject, category,
   photo_path as "photoPath", published, sort_order as "sortOrder",
   created_at as "createdAt", updated_at as "updatedAt"`;
 

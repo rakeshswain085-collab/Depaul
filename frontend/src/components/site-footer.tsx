@@ -5,7 +5,7 @@ import { MAPS_LINK, NAV_LINKS, SCHOOL, UTILITY_LINKS } from "@/lib/site";
 export function SiteFooter() {
   return (
     <footer className="bg-navy-900 text-navy-100">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 md:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <Crest className="h-14 w-14" />

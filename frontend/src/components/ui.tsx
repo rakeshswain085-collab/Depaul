@@ -58,7 +58,7 @@ export function Section({
   className?: string;
 }) {
   return (
-    <section id={id} className={`px-4 py-16 sm:py-20 ${className}`}>
+    <section id={id} className={`px-4 py-12 sm:py-16 lg:py-20 ${className}`}>
       <div className="mx-auto max-w-7xl">{children}</div>
     </section>
   );
@@ -69,54 +69,30 @@ export function InfoCard({
   title,
   children,
 }: {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }) {
   return (
-    <div className="group h-full rounded-xl border border-slate-200 bg-white p-6 shadow-sm transition hover:-translate-y-1 hover:border-gold-300 hover:shadow-xl">
-      <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy-50 text-2xl transition group-hover:bg-gold-100">
-        <span aria-hidden>{icon}</span>
+    <article className="group min-w-0 rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:border-amber-300 hover:shadow-md sm:rounded-2xl sm:p-5 lg:p-6">
+      {/* Compact Icon */}
+      <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-blue-50 text-lg sm:h-11 sm:w-11 sm:text-xl">
+        {icon}
       </div>
-      <h3 className="mt-4 text-lg font-bold text-navy-800">{title}</h3>
-      <div className="mt-2 text-sm leading-relaxed text-slate-600">{children}</div>
-    </div>
-  );
-}
 
-export function NoticeCard({ notice }: { notice: Notice }) {
-  const date = new Date(`${notice.noticeDate}T00:00:00`);
-  return (
-    <article className="flex h-full gap-4 rounded-xl border border-slate-200 bg-white p-5 shadow-sm transition hover:border-gold-300 hover:shadow-lg">
-      <div className="flex h-16 w-16 shrink-0 flex-col items-center justify-center rounded-lg bg-navy-800 text-white">
-        <span className="text-2xl font-extrabold leading-none">
-          {String(date.getDate()).padStart(2, "0")}
-        </span>
-        <span className="text-[11px] font-semibold uppercase tracking-wider text-gold-300">
-          {date.toLocaleDateString("en-IN", { month: "short" })}
-        </span>
-      </div>
-      <div className="min-w-0">
-        <span
-          className={`inline-block rounded-full px-2.5 py-0.5 text-[10px] font-bold uppercase tracking-wider ${
-            notice.isPinned
-              ? "bg-gold-100 text-gold-700"
-              : "bg-navy-50 text-navy-600"
-          }`}
-        >
-          {notice.category}
-        </span>
-        <h3 className="mt-2 text-base font-bold text-navy-800">{notice.title}</h3>
-        <p className="mt-1.5 text-sm leading-relaxed text-slate-600">
-          {notice.body}
-        </p>
-        <p className="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-400">
-          {formatLongDate(notice.noticeDate)}
-        </p>
+      {/* Compact Heading */}
+      <h3 className="mt-3 text-sm font-bold leading-5 text-navy-800 sm:mt-4 sm:text-base sm:leading-6 lg:text-lg">
+        {title}
+      </h3>
+
+      {/* Compact Description */}
+      <div className="mt-1.5 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
+        {children}
       </div>
     </article>
   );
 }
+
 
 export function EventCard({ event }: { event: SchoolEvent }) {
   const upcoming = event.status.toLowerCase() === "upcoming";
