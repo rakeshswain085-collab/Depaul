@@ -58,9 +58,19 @@ export async function GET(request: NextRequest) {
         { status: 400 }
       );
     }
+    if (
+      rollNumber.length > 50 ||
+      examinationKey.length > 150 ||
+      examinationName.length > 150
+    ) {
+      return NextResponse.json(
+        { success: false, message: "The result lookup details are invalid." },
+        { status: 400 }
+      );
+    }
 
     const result = (await query(
-      `select academic_year as "academicYear", class_name as "className", examination_name as "examinationName", examination_key as "examinationKey", roll_number as "rollNumber", student_name as "studentName", subjects, total_marks as "totalMarks", maximum_marks as "maximumMarks", percentage, result_status as "resultStatus", published_at as "publishedAt" from school_exam_results where academic_year=$1 and class_name=$2 and roll_number=$3 and published=true and (${examinationKey ? "examination_key=$4" : "examination_name=$4"}) limit 1`,
+      `select academic_year as "academicYear", class_name as "className", examination_name as "examinationName", examination_key as "examinationKey", examination_date as "examinationDate", serial_number as "serialNumber", roll_number as "rollNumber", student_name as "studentName", subjects, total_marks as "totalMarks", maximum_marks as "maximumMarks", percentage, automatic_grade as "automaticGrade", manual_grade as "manualGrade", final_grade as "finalGrade", result_status as "resultStatus", published_at as "publishedAt" from school_exam_results where academic_year=$1 and class_name=$2 and roll_number=$3 and published=true and (${examinationKey ? "examination_key=$4" : "examination_name=$4"}) limit 1`,
       [academicYear, className, rollNumber, examinationKey || examinationName],
     )).rows[0];
 

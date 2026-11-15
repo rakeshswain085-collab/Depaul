@@ -11,8 +11,8 @@ type Examination = {
 
 type SubjectResult = {
   subject: string;
-  maxMarks: number;
-  marksObtained: number;
+  maxMarks: number | string;
+  marksObtained: number | string;
   grade?: string;
   remarks?: string;
 };
@@ -22,12 +22,14 @@ type ExamResult = {
   className: string;
   examinationName: string;
   examinationKey?: string;
+  examinationDate: string | null;
+  serialNumber: string;
   rollNumber: string;
   studentName: string;
   subjects: SubjectResult[];
-  totalMarks: number;
-  maximumMarks: number;
-  percentage: number;
+  totalMarks: number | string;
+  maximumMarks: number | string;
+  percentage: number | string;
   automaticGrade?: string;
   manualGrade?: string;
   finalGrade?: string;
@@ -210,10 +212,8 @@ export default function ResultsPage() {
     setRollNumber("");
   }
 
-  const formatMarks = (value: number) =>
-    Number.isFinite(value) ? value.toLocaleString("en-IN") : "—";
-
-  const percentage = Number(result?.percentage ?? 0);
+  const displayImportedValue = (value: number | string | null | undefined) =>
+    value === null || value === undefined || value === "" ? "—" : String(value);
 
   return (
     <main className="min-h-screen bg-slate-50 px-4 py-10 text-slate-900 sm:px-6">
@@ -229,7 +229,7 @@ export default function ResultsPage() {
 
           <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-slate-600 sm:text-base">
             Select your academic year, class and examination, then enter
-            your roll number to view your published result.
+            your roll or serial number to view your published result.
           </p>
         </header>
 
@@ -345,7 +345,7 @@ export default function ResultsPage() {
                   htmlFor="rollNumber"
                   className="mb-2 block text-sm font-semibold text-slate-700"
                 >
-                  Roll Number
+                  Roll / Serial Number
                 </label>
 
                 <input
@@ -357,7 +357,7 @@ export default function ResultsPage() {
                     setResult(null);
                     setError("");
                   }}
-                  placeholder="Enter your roll number"
+                  placeholder="Enter your roll or serial number"
                   autoComplete="off"
                   className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm outline-none transition placeholder:text-slate-400 focus:border-blue-600 focus:ring-2 focus:ring-blue-100"
                   required
@@ -400,6 +400,9 @@ export default function ResultsPage() {
             className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm"
           >
             <div className="border-b border-slate-200 bg-slate-900 px-5 py-6 text-white sm:px-8">
+              <p className="text-sm font-semibold text-slate-200">
+                De-Paul Senior Secondary School
+              </p>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-slate-300">
                 Student Result
               </p>
@@ -411,12 +414,17 @@ export default function ResultsPage() {
               <p className="mt-2 text-sm text-slate-300">
                 {result.examinationName} · {result.academicYear}
               </p>
+              {result.examinationDate && (
+                <p className="mt-1 text-sm text-slate-300">
+                  Examination date: {result.examinationDate}
+                </p>
+              )}
             </div>
 
             <div className="grid gap-4 border-b border-slate-200 p-5 sm:grid-cols-3 sm:p-8">
               <SummaryItem
-                label="Roll Number"
-                value={result.rollNumber}
+                label="Roll / Serial Number"
+                value={displayImportedValue(result.rollNumber)}
               />
               <SummaryItem
                 label="Class"
@@ -430,27 +438,28 @@ export default function ResultsPage() {
                 label="Academic Year"
                 value={result.academicYear}
               />
+              {result.serialNumber && (
+                <SummaryItem label="Serial Number" value={result.serialNumber} />
+              )}
             </div>
 
             <div className="grid grid-cols-2 gap-4 p-5 sm:grid-cols-4 sm:p-8">
               <SummaryItem
                 label="Marks Obtained"
-                value={formatMarks(result.totalMarks)}
+                value={displayImportedValue(result.totalMarks)}
               />
               <SummaryItem
                 label="Maximum Marks"
-                value={formatMarks(result.maximumMarks)}
+                value={displayImportedValue(result.maximumMarks)}
               />
               <SummaryItem
                 label="Percentage"
-                value={`${percentage.toFixed(2)}%`}
+                value={`${displayImportedValue(result.percentage)}%`}
               />
               <SummaryItem
                 label="Final Grade"
                 value={
-                  result.finalGrade ||
-                  result.automaticGrade ||
-                  "—"
+                  result.finalGrade || result.automaticGrade || "—"
                 }
               />
             </div>
@@ -503,10 +512,10 @@ export default function ResultsPage() {
                             {subject.subject}
                           </td>
                           <td className="px-4 py-4 text-right text-slate-600">
-                            {formatMarks(subject.maxMarks)}
+                            {displayImportedValue(subject.maxMarks)}
                           </td>
                           <td className="px-4 py-4 text-right font-semibold text-slate-900">
-                            {formatMarks(subject.marksObtained)}
+                            {displayImportedValue(subject.marksObtained)}
                           </td>
                           <td className="px-4 py-4 text-center">
                             {subject.grade || "—"}

@@ -10,6 +10,10 @@ function getText(value: unknown): string {
   return typeof value === "string" ? value.trim() : "";
 }
 
+function isRecord(value: unknown): value is Record<string, unknown> {
+  return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
 function unauthorized() {
   return NextResponse.json(
     { success: false, message: "Unauthorized. Sign in as an administrator." },
@@ -27,7 +31,16 @@ export async function GET(request: Request) {
     const academicYear = getText(params.get("academicYear"));
     const className = getText(params.get("className"));
 
-    const records = (await query<any>(
+    const records = (await query<{
+      academicYear: string;
+      className: string;
+      examinationKey: string;
+      examinationName: string;
+      published: boolean;
+      publishedAt: string | null;
+      createdAt: string | null;
+      updatedAt: string | null;
+    }>(
       `select academic_year as "academicYear", class_name as "className", examination_key as "examinationKey", examination_name as "examinationName", published, published_at as "publishedAt", created_at as "createdAt", updated_at as "updatedAt" from school_exam_results where ($1='' or academic_year=$1) and ($2='' or class_name=$2) order by academic_year desc, updated_at desc limit 10000`,
       [academicYear, className],
     )).rows;
@@ -113,10 +126,30 @@ export async function GET(request: Request) {
 
       return (b.updatedAt ? new Date(b.updatedAt).getTime() : 0) - (a.updatedAt ? new Date(a.updatedAt).getTime() : 0);
     });
+    const importHistory = (await query<{
+      id: string;
+      fileName: string;
+      status: string;
+      detectedClasses: string[];
+      selectedClasses: string[];
+      studentCount: number;
+      publishedStudentCount: number;
+      failedRecords: Array<Record<string, unknown>>;
+      errorMessage: string;
+      createdAt: string;
+      completedAt: string | null;
+    }>(
+      `select id, file_name as "fileName", status, detected_classes as "detectedClasses",
+              selected_classes as "selectedClasses", student_count::int as "studentCount",
+              published_student_count::int as "publishedStudentCount", failed_records as "failedRecords",
+              error_message as "errorMessage", created_at as "createdAt", completed_at as "completedAt"
+       from exam_result_imports order by created_at desc limit 100`,
+    )).rows;
 
     return NextResponse.json({
       success: true,
       examinations,
+      importHistory,
       total: examinations.length,
     });
   } catch (error) {
@@ -135,7 +168,13 @@ export async function PATCH(request: Request) {
   if (!admin) return unauthorized();
 
   try {
-    const body = await request.json();
+    const body: unknown = await request.json();
+    if (!isRecord(body)) {
+      return NextResponse.json(
+        { success: false, message: "Request body must be a JSON object." },
+        { status: 400 },
+      );
+    }
 
     const action = getText(body.action).toLowerCase();
     const academicYear = getText(body.academicYear);
@@ -173,7 +212,27 @@ export async function PATCH(request: Request) {
     }
 
     if (action === "delete") {
-      await query("delete from school_exam_results where academic_year=$1 and class_name=$2 and examination_key=$3", [academicYear, className, examinationKey]);
+      await query(
+        `with deleted as (
+           delete from school_exam_results
+           where academic_year=$1 and class_name=$2 and examination_key=$3
+           returning import_id
+         )
+         update exam_result_imports i
+         set published_student_count=(
+               select count(*)::int from school_exam_results r
+               where r.import_id=i.id and r.published
+             ),
+             status=case when exists (
+               select 1 from school_exam_results r where r.import_id=i.id and r.published
+             ) then 'Published' else 'Ready to Publish' end,
+             completed_at=case when exists (
+               select 1 from school_exam_results r where r.import_id=i.id and r.published
+             ) then now() else null end,
+             updated_at=now()
+         where i.id in (select distinct import_id from deleted where import_id is not null)`,
+        [academicYear, className, examinationKey],
+      );
 
       return NextResponse.json({
         success: true,
@@ -183,7 +242,27 @@ export async function PATCH(request: Request) {
     }
 
     const publish = action === "publish";
-    await query("update school_exam_results set published=$4, published_at=case when $4 then now() else null end, updated_at=now() where academic_year=$1 and class_name=$2 and examination_key=$3", [academicYear, className, examinationKey, publish]);
+    await query(
+      `with affected as (
+         update school_exam_results
+         set published=$4, published_at=case when $4 then now() else null end, updated_at=now()
+         where academic_year=$1 and class_name=$2 and examination_key=$3
+         returning import_id
+       )
+       update exam_result_imports
+       set published_student_count=(select count(*)::int from school_exam_results where import_id=exam_result_imports.id and published),
+           status=case when exists (select 1 from school_exam_results where import_id=exam_result_imports.id and published) then 'Published' else $5 end,
+           completed_at=case when exists (select 1 from school_exam_results where import_id=exam_result_imports.id and published) then now() else null end,
+           updated_at=now()
+       where id in (select distinct import_id from affected where import_id is not null)`,
+      [
+        academicYear,
+        className,
+        examinationKey,
+        publish,
+        publish ? "Published" : "Ready to Publish",
+      ],
+    );
 
     return NextResponse.json({
       success: true,
