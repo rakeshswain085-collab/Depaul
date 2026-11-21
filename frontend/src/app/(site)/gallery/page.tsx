@@ -10,7 +10,7 @@ export const dynamic = "force-dynamic";
 export const metadata: Metadata = {
   title: "Photo Gallery",
   description:
-    "Photographs of the campus, activities, events and memories of De-Paul Senior Secondary School, Aska.",
+    "Photographs of the campus, activities, events and memories of De-Paul Senior Secondary School, Asika.",
 };
 
 export default async function GalleryPage() {

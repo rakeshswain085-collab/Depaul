@@ -71,7 +71,7 @@ export function StaffInformation() {
         </h2>
 
         <p className="mt-2 text-sm text-slate-500">
-          Meet the teaching staff of De-Paul Senior Secondary School, Aska.
+          Meet the teaching staff of De-Paul Senior Secondary School, Asika.
         </p>
       </div>
 

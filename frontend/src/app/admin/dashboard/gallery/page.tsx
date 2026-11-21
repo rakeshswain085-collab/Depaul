@@ -11,6 +11,7 @@ import {
   type FormEvent,
 } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type GalleryPhoto = {
   _id?: string;
@@ -21,6 +22,12 @@ type GalleryPhoto = {
   caption?: string;
   year?: number | string;
   createdAt?: string;
+};
+
+type CampusFacilityChoice = {
+  id: string;
+  photoCategory: string;
+  title: string;
 };
 
 function formatFileSize(bytes: number) {
@@ -51,6 +58,9 @@ function getErrorMessage(error: unknown): string {
 
 export default function AdminGalleryPage() {
   const [photos, setPhotos] = useState<GalleryPhoto[]>([]);
+  const [campusFacilities, setCampusFacilities] = useState<
+    CampusFacilityChoice[]
+  >([]);
   const [selectedYear, setSelectedYear] = useState(
     String(CURRENT_YEAR),
   );
@@ -115,9 +125,29 @@ export default function AdminGalleryPage() {
     }
   }, []);
 
+  const loadCampusFacilities = useCallback(async () => {
+    try {
+      const response = await fetch("/api/admin/campus-facilities", {
+        cache: "no-store",
+      });
+      const result = await response.json();
+      if (!response.ok || !result.success) {
+        throw new Error(result.error || "Failed to load facility categories.");
+      }
+      setCampusFacilities(
+        Array.isArray(result.facilities) ? result.facilities : [],
+      );
+    } catch (err) {
+      setError(getErrorMessage(err));
+    }
+  }, []);
+
   useEffect(() => {
+    // Load server data after mount; state updates happen after each fetch resolves.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     void loadPhotos();
-  }, [loadPhotos]);
+    void loadCampusFacilities();
+  }, [loadCampusFacilities, loadPhotos]);
 
   function handleFileChange(event: ChangeEvent<HTMLInputElement>) {
     const selectedFiles = Array.from(event.target.files ?? []);
@@ -349,7 +379,16 @@ export default function AdminGalleryPage() {
             </p>
             <h2 className="mt-1 text-xl font-bold">Upload to school gallery</h2>
             <p className="mt-1 text-sm text-slate-500">
-              Choose a year and category before uploading your images.
+              Choose a year and category before uploading your images. To add
+              photos to a campus card, select its facility category and upload
+              the photos together. You can{" "}
+              <Link
+                href="/admin/dashboard/facilities"
+                className="font-semibold text-blue-700 underline"
+              >
+                create facility categories
+              </Link>{" "}
+              first; photos are optional.
             </p>
           </div>
 
@@ -403,7 +442,7 @@ export default function AdminGalleryPage() {
                   htmlFor="gallery-category"
                   className="mb-2 block text-sm font-semibold text-slate-700"
                 >
-                  Event Category <span className="text-red-500">*</span>
+                  Event / Campus Section <span className="text-red-500">*</span>
                 </label>
 
                 <select
@@ -418,7 +457,26 @@ export default function AdminGalleryPage() {
                       {item}
                     </option>
                   ))}
+                  {campusFacilities.length > 0 && (
+                    <optgroup label="Campus facilities">
+                      {campusFacilities.map((facility) => (
+                        <option
+                          key={facility.id}
+                          value={facility.photoCategory}
+                        >
+                          {facility.title}
+                        </option>
+                      ))}
+                    </optgroup>
+                  )}
                 </select>
+                <button
+                  type="button"
+                  onClick={() => void loadCampusFacilities()}
+                  className="mt-2 text-xs font-semibold text-blue-700 underline"
+                >
+                  Refresh campus facility options
+                </button>
               </div>
 
               {/* Title */}

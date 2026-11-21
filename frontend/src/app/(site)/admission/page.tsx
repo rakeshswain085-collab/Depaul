@@ -2,12 +2,12 @@ import type { Metadata } from "next";
 import { EnquiryForm } from "@/components/enquiry-form";
 import { PageHero, Section, SectionHeading } from "@/components/ui";
 import { getSettings } from "@/lib/queries";
-import { SCHOOL } from "@/lib/site";
+import { OPENING_HOURS, SCHOOL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Admission",
   description:
-    "Admission information, procedure, schedule and enquiry details for De-Paul Senior Secondary School, Aska.",
+    "Admission information, procedure, schedule and enquiry details for De-Paul Senior Secondary School, Asika.",
 };
 
 export default function AdmissionPage() {
@@ -129,7 +129,7 @@ export default function AdmissionPage() {
               <div className="rounded-xl border border-slate-200 bg-slate-50 p-4 sm:p-5">
                 <div className="flex items-center justify-between gap-3">
                   <h3 className="text-xs font-bold uppercase tracking-wider text-navy-700">
-                    Office Timings
+                    Opening Hours
                   </h3>
 
                   <span className="rounded-full bg-amber-50 px-2.5 py-1 text-[10px] font-semibold text-amber-800">
@@ -138,26 +138,23 @@ export default function AdmissionPage() {
                 </div>
 
                 <div className="mt-3 divide-y divide-slate-200">
-                  <div className="flex items-center justify-between gap-3 py-2 text-xs sm:text-sm">
-                    <span className="text-slate-600">Monday – Friday</span>
-                    <span className="shrink-0 font-semibold text-navy-800">
-                      8:00 AM – 3:00 PM
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 py-2 text-xs sm:text-sm">
-                    <span className="text-slate-600">Saturday</span>
-                    <span className="shrink-0 font-semibold text-navy-800">
-                      8:00 AM – 1:00 PM
-                    </span>
-                  </div>
-
-                  <div className="flex items-center justify-between gap-3 py-2 text-xs sm:text-sm">
-                    <span className="text-slate-600">Sunday &amp; Holidays</span>
-                    <span className="shrink-0 font-semibold text-red-600">
-                      Closed
-                    </span>
-                  </div>
+                  {OPENING_HOURS.map((item) => (
+                    <div
+                      key={item.days}
+                      className="flex items-center justify-between gap-3 py-2 text-xs sm:text-sm"
+                    >
+                      <span className="text-slate-600">{item.days}</span>
+                      <span
+                        className={`shrink-0 font-semibold ${
+                          item.hours === "Closed"
+                            ? "text-red-600"
+                            : "text-navy-800"
+                        }`}
+                      >
+                        {item.hours}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>

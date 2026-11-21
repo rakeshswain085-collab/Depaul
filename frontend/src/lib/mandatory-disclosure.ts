@@ -51,6 +51,15 @@ export type DisclosureDocument = {
   academicYear?: string;
 };
 
+export type BoardExamResult = {
+  year: string;
+  className: "Class X" | "Class XII";
+  registeredStudents: number | null;
+  passedStudents: number | null;
+  compartmentStudents: number | null;
+  published: boolean;
+};
+
 export type DisclosureContent = {
   generalInformation: {
     title: string;
@@ -71,6 +80,7 @@ export type DisclosureContent = {
     title: string;
     description: string;
     records: DisclosureDocument[];
+    boardResults: BoardExamResult[];
   };
 
   staffInformation: {

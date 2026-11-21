@@ -13,7 +13,7 @@ import { ACADEMICS, SCHOOL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Academics",
   description:
-    "Academic programmes at De-Paul Senior Secondary School, Aska – primary, middle, secondary and senior secondary education under CBSE.",
+    "Academic programmes at De-Paul Senior Secondary School, Asika – primary, middle, secondary and senior secondary education under CBSE.",
 };
 
 const STAGES = [

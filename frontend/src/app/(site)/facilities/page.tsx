@@ -1,39 +1,41 @@
 
 import type { Metadata } from "next";
-import { SiteImage } from "@/components/site-image-provider";
+import { FacilitiesCampusShowcase } from "@/components/facilities-campus-showcase";
 import { PageHero, Section, SectionHeading } from "@/components/ui";
+import { getCampusFacilities } from "@/lib/campus-facilities";
+import { getGalleryPhotos } from "@/lib/gallery";
 import { FACILITIES } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Facilities",
   description:
-    "Campus facilities at De-Paul Senior Secondary School, Aska – laboratories, library, smart learning, sports and transport.",
+    "Campus facilities at De-Paul Senior Secondary School, Asika – laboratories, library, smart learning, sports and transport.",
 };
 
-const SHOWCASE = [
-  {
-    imageSlot: "scienceLab",
-    title: "Science Laboratories",
-    body: "Separate physics, chemistry and biology work areas where students perform experiments linked to their syllabus.",
-  },
-  {
-    imageSlot: "library",
-    title: "Library & Reading Room",
-    body: "A calm reading space with story books, reference titles, newspapers and magazines for all age groups.",
-  },
-  {
-    imageSlot: "sports",
-    title: "Playground & Sports",
-    body: "Open ground for athletics, football, kabaddi, volleyball and annual sports day competitions.",
-  },
-  {
-    imageSlot: "cultural",
-    title: "Auditorium & Stage",
-    body: "A stage and assembly area used for cultural programmes, competitions, celebrations and school functions.",
-  },
-] as const;
+export const dynamic = "force-dynamic";
 
-export default function FacilitiesPage() {
+export default async function FacilitiesPage() {
+  const [campusFacilities, galleryPhotos] = await Promise.all([
+    getCampusFacilities(),
+    getGalleryPhotos(),
+  ]);
+  const showcaseItems = campusFacilities.map((item) => ({
+    id: item.id,
+    slug: item.slug,
+    icon: item.icon,
+    imageSlot: item.imageSlot,
+    title: item.title,
+    description: item.description,
+    photos: galleryPhotos
+      .filter((photo) => photo.category === item.photoCategory)
+      .map((photo, index) => ({
+        id: photo.id ?? `${item.photoCategory}-${index}`,
+        imageUrl: photo.imageUrl,
+        title: photo.title,
+        caption: photo.caption,
+      })),
+  }));
+
   return (
     <>
       {/* ---------------- PAGE HERO ---------------- */}
@@ -42,6 +44,17 @@ export default function FacilitiesPage() {
         title="Campus & Facilities"
         subtitle="The school campus at Rankanath Vihar offers the spaces and resources children need for a complete school day."
       />
+
+      {/* ---------------- CAMPUS SHOWCASE ---------------- */}
+      <Section className="bg-slate-50 py-6 sm:py-9 lg:py-12">
+        <SectionHeading
+          eyebrow="A Look Around"
+          title="Inside the Campus"
+          description="Explore the spaces that support our students' learning and development."
+        />
+
+        <FacilitiesCampusShowcase items={showcaseItems} />
+      </Section>
 
       {/* ---------------- FACILITIES ---------------- */}
       <Section className="py-6 sm:py-9 lg:py-12">
@@ -72,48 +85,6 @@ export default function FacilitiesPage() {
               <p className="mt-1.5 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
                 {item.description}
               </p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      {/* ---------------- CAMPUS SHOWCASE ---------------- */}
-      <Section className="bg-slate-50 py-6 sm:py-9 lg:py-12">
-        <SectionHeading
-          eyebrow="A Look Around"
-          title="Inside the Campus"
-          description="Explore the spaces that support our students' learning and development."
-        />
-
-        {/* Responsive Image Cards */}
-        <div className="mt-5 grid grid-cols-1 gap-3 min-[480px]:grid-cols-2 sm:mt-7 sm:gap-5 lg:mt-9 lg:gap-6">
-          {SHOWCASE.map((item) => (
-            <article
-              key={item.title}
-              className="group min-w-0 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-md sm:rounded-2xl"
-            >
-              {/* Responsive Image */}
-              <div className="relative h-40 overflow-hidden min-[480px]:h-36 sm:h-48 lg:h-60">
-                <SiteImage
-                  slot={item.imageSlot}
-                  alt={item.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
-                />
-
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/25 to-transparent opacity-70" />
-              </div>
-
-              {/* Compact Details */}
-              <div className="p-3.5 sm:p-4 lg:p-5">
-                <h3 className="text-sm font-bold leading-5 text-navy-800 sm:text-base lg:text-lg">
-                  {item.title}
-                </h3>
-
-                <p className="mt-1.5 text-xs leading-5 text-slate-600 sm:mt-2 sm:text-sm sm:leading-6">
-                  {item.body}
-                </p>
-              </div>
             </article>
           ))}
         </div>

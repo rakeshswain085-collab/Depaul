@@ -13,11 +13,45 @@ type AcademicRecord = {
   academicYear?: string;
 };
 
+type BoardExamResult = {
+  year: string;
+  className: "Class X" | "Class XII";
+  registeredStudents: number | null;
+  passedStudents: number | null;
+  compartmentStudents: number | null;
+  published: boolean;
+};
+
+type PublishedBoardExamResult = BoardExamResult & {
+  registeredStudents: number;
+  passedStudents: number;
+  compartmentStudents: number;
+};
+
+function isPublishedBoardResult(
+  result: BoardExamResult,
+): result is PublishedBoardExamResult {
+  return (
+    result.published === true &&
+    (result.className === "Class X" || result.className === "Class XII") &&
+    /^\d{4}$/.test(result.year) &&
+    typeof result.registeredStudents === "number" &&
+    result.registeredStudents > 0 &&
+    typeof result.passedStudents === "number" &&
+    result.passedStudents >= 0 &&
+    result.passedStudents <= result.registeredStudents &&
+    typeof result.compartmentStudents === "number" &&
+    result.compartmentStudents >= 0 &&
+    result.compartmentStudents <= result.registeredStudents
+  );
+}
+
 type ContentResponse = {
   success?: boolean;
   data?: {
     resultsAndAcademics?: {
       records?: AcademicRecord[];
+      boardResults?: BoardExamResult[];
     } | null;
   } | null;
   message?: string;
@@ -39,6 +73,7 @@ type PublicDisclosureResponse = {
 
 export default function PublicResultsAcademics() {
   const [records, setRecords] = useState<AcademicRecord[]>([]);
+  const [boardResults, setBoardResults] = useState<PublishedBoardExamResult[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -82,6 +117,11 @@ export default function PublicResultsAcademics() {
 
         const savedRecords =
           contentResult.data?.resultsAndAcademics?.records ?? [];
+        setBoardResults(
+          (contentResult.data?.resultsAndAcademics?.boardResults ?? []).filter(
+            isPublishedBoardResult,
+          ),
+        );
         const contentRecords = savedRecords.filter(
           (record) =>
             record.published === true &&
@@ -129,9 +169,90 @@ export default function PublicResultsAcademics() {
   const documentHref = (fileId: string) =>
     `/api/mandatory-disclosure/file/${encodeURIComponent(fileId)}`;
 
+  const formatCount = (value: number | null) =>
+    typeof value === "number" ? value.toLocaleString() : "—";
+
   return (
     <div className="space-y-6">
-       {/* Student examination results */}
+      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:p-6">
+        <div>
+          <h2 className="text-lg font-bold text-[#10264b]">
+            Last Three Years’ Board Examination Results
+          </h2>
+          <p className="mt-1 text-sm leading-6 text-slate-500">
+            Results for applicable classes, as provided by the school.
+          </p>
+        </div>
+
+        {loading ? (
+          <p className="mt-5 text-sm text-slate-500">
+            Loading board examination results…
+          </p>
+        ) : boardResults.length > 0 ? (
+          <div className="mt-5 space-y-5">
+            {(["Class X", "Class XII"] as const).map((className) => {
+              const classResults = boardResults
+                .filter((result) => result.className === className)
+                .sort((a, b) => Number(b.year) - Number(a.year));
+              if (classResults.length === 0) return null;
+
+              return (
+                <div key={className}>
+                  <h3 className="mb-2 text-sm font-bold text-slate-800">
+                    {className}
+                  </h3>
+                  <div className="overflow-x-auto rounded-xl border border-slate-200">
+                    <table className="w-full min-w-[640px] text-left text-sm">
+                      <thead className="bg-slate-50 text-xs uppercase tracking-wide text-slate-600">
+                        <tr>
+                          <th className="px-4 py-3">Year</th>
+                          <th className="px-4 py-3">Registered</th>
+                          <th className="px-4 py-3">Passed</th>
+                          <th className="px-4 py-3">Pass percentage</th>
+                          <th className="px-4 py-3">Compartment</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-slate-100 text-slate-700">
+                        {classResults.map((result) => (
+                          <tr key={`${className}-${result.year}`}>
+                            <td className="px-4 py-3 font-semibold">
+                              {result.year}
+                            </td>
+                            <td className="px-4 py-3">
+                              {formatCount(result.registeredStudents)}
+                            </td>
+                            <td className="px-4 py-3">
+                              {formatCount(result.passedStudents)}
+                            </td>
+                            <td className="px-4 py-3">
+                              {(
+                                (result.passedStudents /
+                                  result.registeredStudents) *
+                                100
+                              ).toFixed(2)}
+                              %
+                            </td>
+                            <td className="px-4 py-3">
+                              {formatCount(result.compartmentStudents)}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        ) : (
+          <p className="mt-5 rounded-xl border border-dashed border-slate-300 bg-slate-50 px-4 py-5 text-sm text-slate-600">
+            Applicable board examination results will be published here when
+            they are provided by the school.
+          </p>
+        )}
+      </section>
+
+      {/* Student examination results */}
       <Link
         href="/results"
         className="group flex items-center justify-between gap-5 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition-all hover:border-amber-300 hover:shadow-md sm:p-6"

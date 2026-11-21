@@ -258,7 +258,7 @@ export const MESSAGES: LeadershipMessage[] = [
     name: "Mr. Ashok Padhy",
     designation: "Chairman",
     heading: "A Message to Our Students and Parents",
-    body: "At De-Paul Senior Secondary School, Aska, we believe that education should nurture knowledge, values, discipline and responsibility. We are committed to creating an environment where every student can learn, grow and contribute positively to society.",
+    body: "At De-Paul Senior Secondary School, Asika, we believe that education should nurture knowledge, values, discipline and responsibility. We are committed to creating an environment where every student can learn, grow and contribute positively to society.",
     photoUrl: "/images/chairman.jpg",
   },
   {
@@ -266,7 +266,7 @@ export const MESSAGES: LeadershipMessage[] = [
     name: "Ms. Rajani Panda",
     designation: "Principal",
     heading: "A Message to Our Students and Parents",
-    body: "Welcome to De-Paul Senior Secondary School, Aska. We believe that education is a journey of knowledge, character, discipline and discovery. Our school community works together to help every learner develop confidence, responsibility and a spirit of excellence.",
+    body: "Welcome to De-Paul Senior Secondary School, Asika. We believe that education is a journey of knowledge, character, discipline and discovery. Our school community works together to help every learner develop confidence, responsibility and a spirit of excellence.",
     photoUrl: "/images/principal.jpg",
   },
 ];
@@ -276,7 +276,7 @@ export const MESSAGES: LeadershipMessage[] = [
 // ----------------------------------------------------------------------------
 export const ADMISSION = {
   admission_intro:
-    "Admissions at De-Paul Senior Secondary School, Aska are open to students from Pre-Nursery to Senior Secondary levels. Parents may collect the registration form from the school office on working days between 9:00 AM and 2:00 PM.",
+    "Admissions at De-Paul Senior Secondary School, Asika are open to students from Pre-Nursery to Senior Secondary levels. Parents may collect registration forms from the school office during the published office hours.",
   admission_application:
     "Registration forms are issued from the school office. Duly filled forms must be submitted with a copy of the birth certificate, Aadhaar copy, previous progress report and four passport-size photographs.",
   admission_schedule:

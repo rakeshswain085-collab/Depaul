@@ -1,20 +1,27 @@
 export const SCHOOL = {
   name: "De-Paul Senior Secondary School",
-  shortName: "De-Paul School, Aska",
+  shortName: "De-Paul School, Asika",
   tagline: "26 Years of Academic Excellence",
   established: "2000",
   affiliation: "1530153",
   board: "Central Board of Secondary Education",
   address:
-    "Rankanath Vihar, College Square, Nuagam, Aska, Ganjam, Odisha – 761111",
+    "Rankanath Vihar, College Square, Nuagam, Asika, Ganjam, Odisha – 761111",
   phone: "+91 94387 67946",
   phoneHref: "+919438767946",
   email: "depaulschoolaska@gmail.com",
-  youtube: "https://www.youtube.com/@de-paulschoolaska1840",
+  youtube:
+    "https://youtube.com/@depaulseniorsecondaryschoolask?si=e3Lfsua5ZbeY9u8N",
   magazine: "https://heyzine.com/flip-book/de-paul-school-aska.html",
   mapQuery:
-    "De-Paul Senior Secondary School, Rankanath Vihar, College Square, Nuagam, Aska, Ganjam, Odisha 761111",
+    "De-Paul Senior Secondary School, Rankanath Vihar, College Square, Nuagam, Asika, Ganjam, Odisha 761111",
 } as const;
+
+export const OPENING_HOURS = [
+  { days: "Monday – Friday", hours: "9:30 AM – 3:30 PM" },
+  { days: "Saturday", hours: "9:30 AM – 1:30 PM" },
+  { days: "Sunday", hours: "Closed" },
+] as const;
 
 export const MAPS_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
   SCHOOL.mapQuery,
@@ -129,7 +136,7 @@ export const GALLERY_CATEGORIES = [
 ] as const;
 
 export const MANDATORY_DISCLOSURE = [
-  { label: "Name of the School", value: "De-Paul Senior Secondary School, Aska" },
+  { label: "Name of the School", value: "De-Paul Senior Secondary School, Asika" },
   { label: "Affiliation Number", value: "1530153" },
   { label: "School Code", value: "15344" },
   { label: "Board", value: "Central Board of Secondary Education (CBSE)" },

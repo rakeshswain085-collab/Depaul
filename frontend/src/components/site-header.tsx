@@ -117,7 +117,7 @@ export function SiteHeader() {
               </span>
 
               <span className="mt-1 block text-[9px] font-medium uppercase tracking-[0.12em] text-gold-600 sm:text-xs md:text-sm">
-                Aska &middot; Ganjam &middot; Odisha
+                Asika &middot; Ganjam &middot; Odisha
               </span>
             </span>
           </Link>

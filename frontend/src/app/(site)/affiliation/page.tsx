@@ -6,7 +6,7 @@ import { MANDATORY_DISCLOSURE, SCHOOL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "School Affiliation",
   description:
-    "CBSE affiliation details of De-Paul Senior Secondary School, Aska – affiliation number 1530153.",
+    "CBSE affiliation details of De-Paul Senior Secondary School, Asika – affiliation number 1530153.",
 };
 
 export default function AffiliationPage() {
@@ -15,7 +15,7 @@ export default function AffiliationPage() {
       <PageHero
         breadcrumb="Affiliation"
         title="School Affiliation"
-        subtitle="De-Paul Senior Secondary School, Aska is affiliated with the Central Board of Secondary Education, New Delhi."
+        subtitle="De-Paul Senior Secondary School, Asika is affiliated with the Central Board of Secondary Education, New Delhi."
       />
 
       <Section>
@@ -42,7 +42,7 @@ export default function AffiliationPage() {
               <tbody className="divide-y divide-slate-200 bg-white">
                 {[
                   { label: "School", value: `${SCHOOL.name}` },
-                  { label: "Location", value: "Aska, Ganjam, Odisha" },
+                  { label: "Location", value: "Asika, Ganjam, Odisha" },
                   { label: "Board", value: "CBSE, New Delhi" },
                   { label: "Affiliation Number", value: SCHOOL.affiliation },
                   { label: "Classes", value: "Pre-Nursery to Class XII" },

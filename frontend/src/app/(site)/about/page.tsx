@@ -14,7 +14,7 @@ import { ACADEMICS, FACILITIES, SCHOOL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "About De-Paul Senior Secondary School, Aska – CBSE affiliated school in Ganjam, Odisha offering classes from Pre-Nursery to Class XII.",
+    "About De-Paul Senior Secondary School, Asika – CBSE affiliated school in Ganjam, Odisha offering classes from Pre-Nursery to Class XII.",
 };
 
 export default function AboutPage() {
@@ -26,7 +26,7 @@ export default function AboutPage() {
       <PageHero
         breadcrumb="About Us"
         title="About the School"
-        subtitle="De-Paul Senior Secondary School, Aska has been serving the educational needs of the region for more than two decades."
+        subtitle="De-Paul Senior Secondary School, Asika has been serving the educational needs of the region for more than two decades."
       />
 
       <Section>
@@ -36,11 +36,11 @@ export default function AboutPage() {
               eyebrow="Our Story"
               title="A place to learn and grow"
               align="left"
-              description={`${SCHOOL.name} was established in ${SCHOOL.established} at Rankanath Vihar, College Square, Nuagam in Aska, Ganjam. The school is affiliated to the Central Board of Secondary Education, New Delhi with affiliation number ${SCHOOL.affiliation}.`}
+              description={`${SCHOOL.name} was established in ${SCHOOL.established} at Rankanath Vihar, College Square, Nuagam in Asika, Ganjam. The school is affiliated to the Central Board of Secondary Education, New Delhi with affiliation number ${SCHOOL.affiliation}.`}
             />
             <p className="mt-5 text-sm leading-relaxed text-slate-600">
               From its earliest days the school has focused on giving children of
-              Aska and the surrounding villages a disciplined, value-based
+              Asika and the surrounding villages a disciplined, value-based
               education. Classrooms are kept deliberately welcoming so that every
               learner feels safe to ask questions, make mistakes and improve. Over
               the years the school has grown into a full senior secondary
@@ -53,7 +53,7 @@ export default function AboutPage() {
               that they leave school as confident and responsible young people.
             </p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              <FeatureRow icon="📍" label="Location" value="Aska, Ganjam, Odisha" />
+              <FeatureRow icon="📍" label="Location" value="Asika, Ganjam, Odisha" />
               <FeatureRow icon="🎓" label="Board" value={SCHOOL.board} />
               <FeatureRow icon="🏷️" label="Affiliation No." value={SCHOOL.affiliation} />
               <FeatureRow icon="🏛️" label="Classes" value="Pre-Nursery to Class XII" />

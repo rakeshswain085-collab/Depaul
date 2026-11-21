@@ -7,7 +7,7 @@ import { ACHIEVEMENTS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Achievements & Activities",
   description:
-    "Student achievements in academics, sports, cultural activities and science innovation at De-Paul Senior Secondary School, Aska.",
+    "Student achievements in academics, sports, cultural activities and science innovation at De-Paul Senior Secondary School, Asika.",
 };
 
 const ACTIVITIES = [

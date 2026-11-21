@@ -6,6 +6,7 @@ const sections = [
   { label: "Overview", href: "/admin/dashboard" },
   { label: "Notices", href: "/admin/dashboard/notices" },
   { label: "Events", href: "/admin/dashboard/events" },
+  { label: "Facilities", href: "/admin/dashboard/facilities" },
   { label: "Gallery", href: "/admin/dashboard/gallery" },
   { label: "Website Images", href: "/admin/dashboard/images" },
   {

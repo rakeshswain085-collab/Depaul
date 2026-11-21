@@ -13,16 +13,16 @@ const DEFAULT_CONTENT: DisclosureContent = {
   generalInformation: {
     title: "General Information",
     description:
-      "Official information about De-Paul Senior Secondary School, Aska.",
+      "Official information about De-Paul Senior Secondary School, Asika.",
     fields: [
-      { label: "Name of the School", value: "De-Paul Senior Secondary School, Aska" },
+      { label: "Name of the School", value: "De-Paul Senior Secondary School, Asika" },
       { label: "Affiliation Number", value: "1530153" },
       { label: "School Code", value: "15344" },
       { label: "Board", value: "Central Board of Secondary Education (CBSE)" },
       { label: "School Category", value: "Senior Secondary (Co-educational)" },
       { label: "Classes Offered", value: "Pre-Nursery to Class XII" },
       { label: "Year of Establishment", value: "2000" },
-      { label: "Address", value: "Rankanath Vihar, College Square, Nuagam, Aska, Ganjam, Odisha – 761111" },
+      { label: "Address", value: "Rankanath Vihar, College Square, Nuagam, Asika, Ganjam, Odisha – 761111" },
       { label: "District / State", value: "Ganjam, Odisha – 761111" },
       { label: "Principal", value: "Ms. Rajani Panda" },
       { label: "Chairman", value: "Mr. Ashok Padhy" },
@@ -51,6 +51,7 @@ const DEFAULT_CONTENT: DisclosureContent = {
       { title: "Parent Teacher Association (PTA)", description: "List of PTA members", fileId: "", fileName: "", published: false },
       { title: "Last Three Years Board Examination Results", description: "CBSE board examination results", fileId: "", fileName: "", published: false },
     ],
+    boardResults: [],
   },
 
   staffInformation: {
@@ -99,6 +100,81 @@ function isObject(value: unknown): value is Record<string, unknown> {
   );
 }
 
+function validateBoardResults(value: unknown): boolean {
+  if (!Array.isArray(value)) return false;
+
+  const countsByClass = new Map<string, number>();
+  const yearsByClass = new Set<string>();
+
+  for (const result of value) {
+    if (!isObject(result)) return false;
+    if (
+      result.className !== "Class X" &&
+      result.className !== "Class XII"
+    ) {
+      return false;
+    }
+
+    const className = result.className;
+    const classCount = (countsByClass.get(className) ?? 0) + 1;
+    if (classCount > 3) return false;
+    countsByClass.set(className, classCount);
+
+    if (
+      typeof result.year !== "string" ||
+      typeof result.published !== "boolean"
+    ) {
+      return false;
+    }
+
+    const counts: unknown[] = [
+      result.registeredStudents,
+      result.passedStudents,
+      result.compartmentStudents,
+    ];
+    if (
+      counts.some(
+        (count) =>
+          count !== null &&
+          (typeof count !== "number" ||
+            !Number.isInteger(count) ||
+            count < 0),
+      )
+    ) {
+      return false;
+    }
+
+    const year = result.year.trim();
+    if (result.published) {
+      if (!/^\d{4}$/.test(year)) return false;
+
+      const registered = result.registeredStudents;
+      const passed = result.passedStudents;
+      const compartment = result.compartmentStudents;
+      if (
+        typeof registered !== "number" ||
+        registered < 1 ||
+        typeof passed !== "number" ||
+        passed < 0 ||
+        passed > registered ||
+        typeof compartment !== "number" ||
+        compartment < 0 ||
+        compartment > registered
+      ) {
+        return false;
+      }
+    }
+
+    if (year) {
+      const identity = `${className}:${year}`;
+      if (yearsByClass.has(identity)) return false;
+      yearsByClass.add(identity);
+    }
+  }
+
+  return true;
+}
+
 function validateContent(body: unknown): body is Record<string, unknown> {
   if (!isObject(body)) return false;
 
@@ -111,7 +187,14 @@ function validateContent(body: unknown): body is Record<string, unknown> {
     "campusInspection",
   ];
 
-  return sections.every((section) => isObject(body[section]));
+  if (!sections.every((section) => isObject(body[section]))) return false;
+
+  const resultsAndAcademics = body.resultsAndAcademics;
+  if (!isObject(resultsAndAcademics)) return false;
+  return (
+    !("boardResults" in resultsAndAcademics) ||
+    validateBoardResults(resultsAndAcademics.boardResults)
+  );
 }
 
 export async function GET() {
@@ -120,7 +203,18 @@ export async function GET() {
       "select payload from mandatory_disclosure_content where key = $1",
       [CONTENT_KEY],
     );
-    const data = rows[0]?.payload ?? DEFAULT_CONTENT;
+    const stored = rows[0]?.payload;
+    const data = stored
+      ? {
+          ...DEFAULT_CONTENT,
+          ...stored,
+          resultsAndAcademics: {
+            ...DEFAULT_CONTENT.resultsAndAcademics,
+            ...stored.resultsAndAcademics,
+            boardResults: stored.resultsAndAcademics?.boardResults ?? [],
+          },
+        }
+      : DEFAULT_CONTENT;
 
     if ((data as DisclosureContent & { published?: boolean }).published === false) {
       return NextResponse.json({
@@ -164,7 +258,7 @@ export async function PUT(request: NextRequest) {
         {
           success: false,
           message:
-            "Invalid disclosure content. All six sections are required.",
+            "Invalid disclosure content. Check that all six sections are present and each published board result has valid figures, with no more than three unique years per class.",
         },
         { status: 400 }
       );

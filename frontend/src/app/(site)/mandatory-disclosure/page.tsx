@@ -10,7 +10,7 @@ import PublicResultsAcademics from "@/components/mandatory-disclosure/PublicResu
 export const metadata: Metadata = {
   title: "Mandatory Disclosure",
   description:
-    "Mandatory public disclosure of De-Paul Senior Secondary School, Aska, including certificates, academic results, staff information and school infrastructure.",
+    "Mandatory public disclosure of De-Paul Senior Secondary School, Asika, including certificates, academic results, staff information and school infrastructure.",
 };
 
 const INFRASTRUCTURE = [
@@ -101,7 +101,7 @@ export default function MandatoryDisclosurePage() {
             <SectionHeading
               eyebrow="01 — School Details"
               title="General Information"
-              description="Official information about De-Paul Senior Secondary School, Aska."
+              description="Official information about De-Paul Senior Secondary School, Asika."
             />
 
             <div className="overflow-hidden rounded-2xl border border-slate-200 shadow-sm">

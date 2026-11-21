@@ -7,7 +7,7 @@ import { MAPS_EMBED, MAPS_LINK, SCHOOL } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Contact De-Paul Senior Secondary School, Aska – address, phone number, email, location map and enquiry form.",
+    "Contact De-Paul Senior Secondary School, Asika – address, phone number, email, location map and enquiry form.",
 };
 
 export default function ContactPage() {
@@ -71,7 +71,7 @@ export default function ContactPage() {
             </div>
             <div className="p-5">
               <h3 className="text-sm font-bold text-navy-800">
-                📍 {SCHOOL.name}, Aska
+                📍 {SCHOOL.name}, Asika
               </h3>
               <p className="mt-1 text-sm text-slate-600">{SCHOOL.address}</p>
               <a

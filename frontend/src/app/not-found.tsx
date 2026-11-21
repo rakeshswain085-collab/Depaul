@@ -12,7 +12,7 @@ export default function NotFound() {
       </h1>
       <p className="mt-3 max-w-md text-sm leading-relaxed text-navy-200">
         The page you are looking for is not available on the website of{" "}
-        {SCHOOL.name}, Aska. Please use the links below to continue.
+        {SCHOOL.name}, Asika. Please use the links below to continue.
       </p>
       <div className="mt-8 flex flex-wrap justify-center gap-3">
         <Link

@@ -1,23 +1,29 @@
 import Link from "next/link";
 import { Crest } from "@/components/crest";
-import { MAPS_LINK, NAV_LINKS, SCHOOL, UTILITY_LINKS } from "@/lib/site";
+import {
+  MAPS_LINK,
+  NAV_LINKS,
+  OPENING_HOURS,
+  SCHOOL,
+  UTILITY_LINKS,
+} from "@/lib/site";
 
 export function SiteFooter() {
   return (
     <footer className="bg-navy-900 text-navy-100">
-      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:grid-cols-2 lg:grid-cols-5">
         <div className="md:col-span-2">
           <div className="flex items-center gap-3">
             <Crest className="h-14 w-14" />
             <div>
               <p className="text-base font-extrabold uppercase tracking-wide text-white">
-                {SCHOOL.name}, Aska
+                {SCHOOL.name}, Asika
               </p>
               <p className="text-xs text-gold-300">{SCHOOL.tagline}</p>
             </div>
           </div>
           <p className="mt-5 max-w-md text-sm leading-relaxed text-navy-200">
-            A welcoming educational environment at Aska, Ganjam where students are
+            A welcoming educational environment at Asika, Ganjam where students are
             encouraged to learn, participate, develop confidence and grow with
             values under the CBSE curriculum.
           </p>
@@ -101,6 +107,28 @@ export function SiteFooter() {
             <li>CBSE Affiliation No.: {SCHOOL.affiliation}</li>
           </ul>
         </div>
+
+        <div>
+          <h3 className="text-sm font-bold uppercase tracking-widest text-gold-300">
+            Opening Hours
+          </h3>
+          <ul className="mt-4 space-y-3 text-sm">
+            {OPENING_HOURS.map((item) => (
+              <li key={item.days}>
+                <span className="block text-navy-300">{item.days}</span>
+                <span
+                  className={
+                    item.hours === "Closed"
+                      ? "font-semibold text-red-300"
+                      : "font-semibold text-navy-100"
+                  }
+                >
+                  {item.hours}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
       <div className="border-t border-navy-800">
@@ -109,7 +137,7 @@ export function SiteFooter() {
             &copy; {new Date().getFullYear()} {SCHOOL.name}. All Rights Reserved.
           </p>
           <p className="text-navy-400">
-            Rankanath Vihar, College Square, Nuagam, Aska, Ganjam, Odisha – 761111
+            Rankanath Vihar, College Square, Nuagam, Asika, Ganjam, Odisha – 761111
           </p>
         </div>
       </div>

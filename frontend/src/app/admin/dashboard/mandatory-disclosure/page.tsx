@@ -14,6 +14,15 @@ type DisclosureDocument = {
   academicYear?: string;
 };
 
+type BoardExamResult = {
+  year: string;
+  className: "Class X" | "Class XII";
+  registeredStudents: number | null;
+  passedStudents: number | null;
+  compartmentStudents: number | null;
+  published: boolean;
+};
+
 type TeacherCategory = "PGT" | "TGT" | "PRT";
 
 type Teacher = {
@@ -47,6 +56,7 @@ type DisclosureContent = {
     title: string;
     description: string;
     records: DisclosureDocument[];
+    boardResults: BoardExamResult[];
   };
   staffInformation: {
     title: string;
@@ -172,16 +182,16 @@ const defaults: DisclosureContent = {
   generalInformation: {
     title: "General Information",
     description:
-      "Official information about De-Paul Senior Secondary School, Aska.",
+      "Official information about De-Paul Senior Secondary School, Asika.",
     fields: [
-      { label: "Name of the School", value: "De-Paul Senior Secondary School, Aska" },
+      { label: "Name of the School", value: "De-Paul Senior Secondary School, Asika" },
       { label: "Affiliation Number", value: "1530153" },
       { label: "School Code", value: "15344" },
       { label: "Board", value: "Central Board of Secondary Education (CBSE)" },
       { label: "School Category", value: "Senior Secondary (Co-educational)" },
       { label: "Classes Offered", value: "Pre-Nursery to Class XII" },
       { label: "Year of Establishment", value: "2000" },
-      { label: "Address", value: "Rankanath Vihar, College Square, Nuagam, Aska, Ganjam, Odisha – 761111" },
+      { label: "Address", value: "Rankanath Vihar, College Square, Nuagam, Asika, Ganjam, Odisha – 761111" },
       { label: "District / State", value: "Ganjam, Odisha – 761111" },
       { label: "Principal", value: "Ms. Rajani Panda" },
       { label: "Chairman", value: "Mr. Ashok Padhy" },
@@ -202,6 +212,7 @@ const defaults: DisclosureContent = {
     description:
       "Academic information, examination results, school fees and committee records.",
     records: initialRecords,
+    boardResults: [],
   },
   staffInformation: {
     title: "Staff Information",
@@ -541,9 +552,17 @@ export default function MandatoryDisclosureAdminPage() {
       }
 
       if (result.data) {
+        const loadedContent = result.data as Partial<DisclosureContent>;
         setContent((current) => ({
           ...current,
-          ...result.data,
+          ...loadedContent,
+          resultsAndAcademics: {
+            ...current.resultsAndAcademics,
+            ...loadedContent.resultsAndAcademics,
+            boardResults:
+              loadedContent.resultsAndAcademics?.boardResults ??
+              current.resultsAndAcademics.boardResults,
+          },
         }));
       } else {
         setContent(cloneDefaults());
@@ -780,6 +799,52 @@ export default function MandatoryDisclosureAdminPage() {
         ),
       }));
     }
+  }
+
+  function updateBoardResult(
+    index: number,
+    changes: Partial<BoardExamResult>,
+  ) {
+    updateSection("resultsAndAcademics", (section) => ({
+      ...section,
+      boardResults: section.boardResults.map((result, i) =>
+        i === index ? { ...result, ...changes } : result,
+      ),
+    }));
+  }
+
+  function addBoardResult() {
+    const results = content.resultsAndAcademics.boardResults;
+    const className =
+      results.filter((result) => result.className === "Class X").length < 3
+        ? "Class X"
+        : "Class XII";
+    if (results.filter((result) => result.className === className).length >= 3) {
+      setError("You can add up to three years for each applicable class.");
+      return;
+    }
+
+    updateSection("resultsAndAcademics", (section) => ({
+      ...section,
+      boardResults: [
+        ...section.boardResults,
+        {
+          year: "",
+          className,
+          registeredStudents: null,
+          passedStudents: null,
+          compartmentStudents: null,
+          published: false,
+        },
+      ],
+    }));
+  }
+
+  function removeBoardResult(index: number) {
+    updateSection("resultsAndAcademics", (section) => ({
+      ...section,
+      boardResults: section.boardResults.filter((_, i) => i !== index),
+    }));
   }
 
   const activeMeta = sections.find((section) => section.key === activeSection)!;
@@ -1203,6 +1268,176 @@ export default function MandatoryDisclosureAdminPage() {
                         }
                       />
                     </div>
+
+                    <section className="space-y-4 rounded-xl border border-amber-200 bg-amber-50/50 p-4 sm:p-5">
+                      <div>
+                        <h3 className="font-semibold text-slate-900">
+                          Last Three Years’ Board Examination Results
+                        </h3>
+                        <p className="mt-1 text-sm leading-6 text-slate-600">
+                          Enter up to three result years for each applicable
+                          class. Pass percentage is calculated from students
+                          passed and registered. Keep a row unpublished until
+                          its figures are verified.
+                        </p>
+                      </div>
+
+                      {content.resultsAndAcademics.boardResults.map(
+                        (result, index) => {
+                          const classXCount =
+                            content.resultsAndAcademics.boardResults.filter(
+                              (item, itemIndex) =>
+                                itemIndex !== index &&
+                                item.className === "Class X",
+                            ).length;
+                          const classXIICount =
+                            content.resultsAndAcademics.boardResults.filter(
+                              (item, itemIndex) =>
+                                itemIndex !== index &&
+                                item.className === "Class XII",
+                            ).length;
+
+                          return (
+                            <article
+                              key={index}
+                              className="space-y-4 rounded-xl border border-slate-200 bg-white p-4"
+                            >
+                              <div className="flex items-center justify-between gap-3">
+                                <h4 className="font-semibold text-slate-800">
+                                  Board result {String(index + 1).padStart(2, "0")}
+                                </h4>
+                                <button
+                                  type="button"
+                                  onClick={() => removeBoardResult(index)}
+                                  className="text-xs font-semibold text-red-600 hover:underline"
+                                >
+                                  Remove
+                                </button>
+                              </div>
+
+                              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+                                <label className="block text-sm font-medium text-slate-700">
+                                  Examination year
+                                  <input
+                                    type="number"
+                                    min="2000"
+                                    max="2100"
+                                    step="1"
+                                    value={result.year}
+                                    onChange={(event) =>
+                                      updateBoardResult(index, {
+                                        year: event.target.value,
+                                      })
+                                    }
+                                    placeholder="e.g. 2025"
+                                    className={inputClass}
+                                  />
+                                </label>
+
+                                <label className="block text-sm font-medium text-slate-700">
+                                  Class
+                                  <select
+                                    value={result.className}
+                                    onChange={(event) =>
+                                      updateBoardResult(index, {
+                                        className:
+                                          event.target.value === "Class XII"
+                                            ? "Class XII"
+                                            : "Class X",
+                                      })
+                                    }
+                                    className={inputClass}
+                                  >
+                                    <option
+                                      value="Class X"
+                                      disabled={
+                                        result.className !== "Class X" &&
+                                        classXCount >= 3
+                                      }
+                                    >
+                                      Class X
+                                    </option>
+                                    <option
+                                      value="Class XII"
+                                      disabled={
+                                        result.className !== "Class XII" &&
+                                        classXIICount >= 3
+                                      }
+                                    >
+                                      Class XII
+                                    </option>
+                                  </select>
+                                </label>
+
+                                {(
+                                  [
+                                    ["registeredStudents", "Students registered"],
+                                    ["passedStudents", "Students passed"],
+                                    [
+                                      "compartmentStudents",
+                                      "Students in compartment",
+                                    ],
+                                  ] as const
+                                ).map(([field, label]) => (
+                                  <label
+                                    key={field}
+                                    className="block text-sm font-medium text-slate-700"
+                                  >
+                                    {label}
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      step="1"
+                                      value={result[field] ?? ""}
+                                      onChange={(event) => {
+                                        const value =
+                                          event.target.value === ""
+                                            ? null
+                                            : Number(event.target.value);
+                                        const change =
+                                          field === "registeredStudents"
+                                            ? { registeredStudents: value }
+                                            : field === "passedStudents"
+                                              ? { passedStudents: value }
+                                              : { compartmentStudents: value };
+                                        updateBoardResult(index, change);
+                                      }}
+                                      className={inputClass}
+                                    />
+                                  </label>
+                                ))}
+                              </div>
+
+                              <Toggle
+                                label="Publish this board result"
+                                checked={result.published}
+                                onChange={(checked) =>
+                                  updateBoardResult(index, {
+                                    published: checked,
+                                  })
+                                }
+                              />
+                            </article>
+                          );
+                        },
+                      )}
+
+                      <button
+                        type="button"
+                        onClick={addBoardResult}
+                        disabled={
+                          content.resultsAndAcademics.boardResults.filter(
+                            (result) => result.className === "Class X",
+                          ).length >= 3 &&
+                          content.resultsAndAcademics.boardResults.filter(
+                            (result) => result.className === "Class XII",
+                          ).length >= 3
+                        }
+                        className="rounded-lg border border-slate-300 px-3 py-2 text-sm font-semibold hover:bg-white disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        + Add board result year
+                      </button>
+                    </section>
 
                     <div className="space-y-4">
                       {content.resultsAndAcademics.records.map((doc, index) => {
